@@ -31,3 +31,8 @@ if has('statusline')
   set statusline+=0x%-8B\                      " character code under cursor
   set statusline+=%-7.(%l,%c%V%)\ %<%P         " cursor position/offset
 endif
+
+" disable ShowMarks if vim has no +signs support
+if has( "signs" ) == 0
+  let loaded_showmarks = 1
+endif
