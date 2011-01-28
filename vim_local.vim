@@ -3,11 +3,6 @@ set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<
 
 colorscheme tir_black
 
-" set mouse to Normal mode only, not All mode.
-if has("mouse")
-  set mouse=n
-endif
-
 " StatusLine
 set laststatus=2
 " http://vim.wikia.com/wiki/VimTip1573
