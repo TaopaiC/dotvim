@@ -3,6 +3,9 @@ set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<
 
 colorscheme tir_black
 
+set cursorline
+set cursorcolumn
+
 " StatusLine
 set laststatus=2
 " http://vim.wikia.com/wiki/VimTip1573
