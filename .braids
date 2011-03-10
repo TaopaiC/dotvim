@@ -118,6 +118,13 @@ bundle/syntastic:
   squashed: true
   type: git
   url: git://github.com/scrooloose/syntastic.git
+bundle/tabular: 
+  branch: master
+  remote: braid/bundle/tabular
+  revision: 1835018f9622d05fb55298b0db3afa3db39a8032
+  squashed: true
+  type: git
+  url: git://github.com/godlygeek/tabular.git
 bundle/unimpaired: 
   branch: master
   remote: braid/bundles/unimpaired
