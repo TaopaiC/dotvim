@@ -3,6 +3,11 @@ set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<
 
 colorscheme tir_black
 
+" set mouse to Normal mode only, not All mode.
+if has("mouse")
+  set mouse=""
+endif
+
 set cursorline
 set cursorcolumn
 
