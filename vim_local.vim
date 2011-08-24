@@ -1,5 +1,6 @@
 " avoid using 2byte characters
 set listchars=tab:>-,trail:-,eol:$,extends:>,precedes:<
+set mouse=""
 
 colorscheme tir_black
 
