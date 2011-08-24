@@ -128,7 +128,7 @@ bundle/syntastic:
 bundle/unimpaired: 
   branch: master
   remote: braid/bundles/unimpaired
-  revision: fe95324a679685054f2db2cc47fe482e9861ee8f
+  revision: 5b7a9c3addc98684ce4739e22840866aa0726537
   squashed: true
   type: git
   url: git://github.com/tpope/vim-unimpaired.git
