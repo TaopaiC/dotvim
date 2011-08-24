@@ -86,7 +86,7 @@ bundle/pastie:
 bundle/rails: 
   branch: master
   remote: braid/bundles/rails
-  revision: 5db62b2ac4b1cabcc34e963b6156180ca58e7469
+  revision: ed73244c7ef4535cfc3f6033fd92ba1032edca96
   squashed: true
   type: git
   url: git://github.com/tpope/vim-rails.git
