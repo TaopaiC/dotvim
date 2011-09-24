@@ -156,7 +156,7 @@ bundle/tagbar:
 bundle/threesome: 
   branch: master
   remote: master/braid/bundle/threesome
-  revision: 9d909e946beb57d4f992150bafcc8134a9a3544f
+  revision: 389e0f55f14ccde138b7b5fb3690ee3c2059589d
   squashed: true
   type: git
   url: https://github.com/sjl/threesome.vim.git
