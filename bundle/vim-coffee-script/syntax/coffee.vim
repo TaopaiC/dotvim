@@ -3,235 +3,171 @@
 " URL:         http://github.com/kchmck/vim-coffee-script
 " License:     WTFPL
 
-" Bail if our syntax is already loaded.
-if exists('b:current_syntax') && b:current_syntax == 'coffee'
+if exists("b:current_syntax")
   finish
 endif
 
 if version < 600
-  syn clear
+  syntax clear
 endif
 
-" Include JavaScript for coffeeEmbed.
-syn include @coffeeJS syntax/javascript.vim
+let b:current_syntax = "coffee"
 
 " Highlight long strings.
-syn sync minlines=100
+syntax sync minlines=100
 
-" CoffeeScript identifiers can have dollar signs.
+" CoffeeScript allows dollar signs in identifiers.
 setlocal isident+=$
 
-" These are `matches` instead of `keywords` because vim's highlighting
-" priority for keywords is higher than matches. This causes keywords to be
-" highlighted inside matches, even if a match says it shouldn't contain them --
-" like with coffeeAssign and coffeeDot.
-syn match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/ display
-hi def link coffeeStatement Statement
+" These are 'matches' rather than 'keywords' because vim's highlighting priority
+" for keywords (the highest) causes them to be wrongly highlighted when used as
+" dot-properties.
+syntax match coffeeStatement /\<\%(return\|break\|continue\|throw\)\>/
+highlight default link coffeeStatement Statement
 
-syn match coffeeRepeat /\<\%(for\|while\|until\|loop\)\>/ display
-hi def link coffeeRepeat Repeat
+syntax match coffeeRepeat /\<\%(for\|while\|until\|loop\)\>/
+highlight default link coffeeRepeat Repeat
 
-syn match coffeeConditional /\<\%(if\|else\|unless\|switch\|when\|then\)\>/
-\                           display
-hi def link coffeeConditional Conditional
+syntax match coffeeConditional /\<\%(if\|else\|unless\|switch\|when\|then\)\>/
+highlight default link coffeeConditional Conditional
 
-syn match coffeeException /\<\%(try\|catch\|finally\)\>/ display
-hi def link coffeeException Exception
+syntax match coffeeException /\<\%(try\|catch\|finally\)\>/
+highlight default link coffeeException Exception
 
-syn match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\|do\)\>/
-\                       display
-hi def link coffeeKeyword Keyword
+syntax match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/
+highlight default link coffeeOperator Operator
 
-syn match coffeeOperator /\<\%(instanceof\|typeof\|delete\)\>/ display
-hi def link coffeeOperator Operator
+syntax match coffeeKeyword /\<\%(new\|in\|of\|by\|and\|or\|not\|is\|isnt\|class\|extends\|super\|own\)\>/
+highlight default link coffeeKeyword Keyword
 
-" The first case matches symbol operators only if they have an operand before.
-syn match coffeeExtendedOp /\%(\S\s*\)\@<=[+\-*/%&|\^=!<>?.]\+\|--\|++\|::/
-\                          display
-syn match coffeeExtendedOp /\%(and\|or\)=/ display
-hi def link coffeeExtendedOp coffeeOperator
+syntax match coffeeBoolean /\<\%(\%(true\|on\|yes\|false\|off\|no\)\)\>/
+highlight default link coffeeBoolean Boolean
 
-" This is separate from `coffeeExtendedOp` to help differentiate commas from
-" dots.
-syn match coffeeSpecialOp /[,;]/ display
-hi def link coffeeSpecialOp SpecialChar
+syntax match coffeeGlobal /\<\%(null\|undefined\)\>/
+highlight default link coffeeGlobal Type
 
-syn match coffeeBoolean /\<\%(true\|on\|yes\|false\|off\|no\)\>/ display
-hi def link coffeeBoolean Boolean
+" Keywords reserved by the language
+syntax cluster coffeeReserved contains=coffeeStatement,coffeeRepeat,
+\                                      coffeeConditional,coffeeException,
+\                                      coffeeOperator,coffeeKeyword,
+\                                      coffeeBoolean,coffeeGlobal
 
-syn match coffeeGlobal /\<\%(null\|undefined\)\>/ display
-hi def link coffeeGlobal Type
+syntax match coffeeVar /\<\%(this\|prototype\|arguments\)\>/
+" Matches @-variables like @abc.
+syntax match coffeeVar /@\%(\I\i*\)\?/
+highlight default link coffeeVar Type
 
-" A special variable
-syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/ display
-" An @-variable
-syn match coffeeSpecialVar /@\%(\I\i*\)\?/ display
-hi def link coffeeSpecialVar Special
+" Matches class-like names that start with a capital letter, like Array or
+" Object.
+syntax match coffeeObject /\<\u\w*\>/
+highlight default link coffeeObject Structure
 
-" A class-like name that starts with a capital letter
-syn match coffeeObject /\<\u\w*\>/ display
-hi def link coffeeObject Structure
+" Matches constant-like names in SCREAMING_CAPS.
+syntax match coffeeConstant /\<\u[A-Z0-9_]\+\>/
+highlight default link coffeeConstant Constant
 
-" A constant-like name in SCREAMING_CAPS
-syn match coffeeConstant /\<\u[A-Z0-9_]\+\>/ display
-hi def link coffeeConstant Constant
+" What can make up a variable name
+syntax cluster coffeeIdentifier contains=coffeeVar,coffeeObject,coffeeConstant,
+\                                        coffeePrototype
 
-" A variable name
-syn cluster coffeeIdentifier contains=coffeeSpecialVar,coffeeObject,
-\                                     coffeeConstant
+syntax region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=@coffeeInterpString
+syntax region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=@coffeeSimpleString
+highlight default link coffeeString String
 
-" A non-interpolated string
-syn cluster coffeeBasicString contains=@Spell,coffeeEscape
-" An interpolated string
-syn cluster coffeeInterpString contains=@coffeeBasicString,coffeeInterp
+syntax region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/ contained contains=@coffeeSimpleString
+syntax region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/ contained contains=@coffeeSimpleString
+highlight default link coffeeAssignString String
 
-" Regular strings
-syn region coffeeString start=/"/ skip=/\\\\\|\\"/ end=/"/
-\                       contains=@coffeeInterpString
-syn region coffeeString start=/'/ skip=/\\\\\|\\'/ end=/'/
-\                       contains=@coffeeBasicString
-hi def link coffeeString String
+" Matches numbers like -10, -10e8, -10E8, 10, 10e8, 10E8.
+syntax match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/
+" Matches hex numbers like 0xfff, 0x000.
+syntax match coffeeNumber /\<0[xX]\x\+\>/
+highlight default link coffeeNumber Number
 
-" A integer, including a leading plus or minus
-syn match coffeeNumber /\i\@<![-+]\?\d\+\%([eE][+-]\?\d\+\)\?/ display
-" A hex number
-syn match coffeeNumber /\<0[xX]\x\+\>/ display
-hi def link coffeeNumber Number
+" Matches floating-point numbers like -10.42e8, 10.42e-8.
+syntax match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
+highlight default link coffeeFloat Float
 
-" A floating-point number, including a leading plus or minus
-syn match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
-\                     display
-hi def link coffeeFloat Float
+syntax match coffeeAssignSymbols /:\@<!::\@!\|\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)=\@<!==\@!>\@!/ contained
+highlight default link coffeeAssignSymbols SpecialChar
 
-" An error for reserved keywords
+syntax match coffeeAssignBrackets /\[.\+\]/ contained contains=TOP,coffeeAssign
+
+syntax match coffeeAssign /\%(@\|@\?\I\)\%(\i\|::\|\.\|?\|\[.\+\]\)*\s*\%(and\|or\|\|&&\|||\|?\|+\|-\|\/\|\*\|%\|<<\|>>\|>>>\|&\||\|\^\)=\@<!==\@!>\@!/
+\                         contains=@coffeeIdentifier,coffeeAssignSymbols,coffeeAssignBrackets
+
+" Displays an error for reserved words.
 if !exists("coffee_no_reserved_words_error")
-  syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\|__bind\|__indexOf\)\>/
-  \                             display
-  hi def link coffeeReservedError Error
+  syntax match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\)\>/
+  highlight default link coffeeReservedError Error
 endif
 
-" This is separate from `coffeeExtendedOp` since assignments require it.
-syn match coffeeAssignOp /:/ contained display
-hi def link coffeeAssignOp coffeeOperator
+syntax match coffeeAssign /@\?\I\i*\s*:\@<!::\@!/ contains=@coffeeIdentifier,coffeeAssignSymbols
+" Matches string assignments in object literals like {'a': 'b'}.
+syntax match coffeeAssign /\("\|'\)[^'"]\+\1\s*;\@<!::\@!/ contains=coffeeAssignString,
+\                                                      coffeeAssignSymbols
+" Matches number assignments in object literals like {42: 'a'}.
+syntax match coffeeAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/ contains=coffeeNumber,coffeeAssignSymbols
+highlight default link coffeeAssign Identifier
 
-" Strings used in string assignments, which can't have interpolations
-syn region coffeeAssignString start=/"/ skip=/\\\\\|\\"/ end=/"/ contained
-\                             contains=@coffeeBasicString
-syn region coffeeAssignString start=/'/ skip=/\\\\\|\\'/ end=/'/ contained
-\                             contains=@coffeeBasicString
-hi def link coffeeAssignString String
+syntax match coffeePrototype /::/
+highlight default link coffeePrototype SpecialChar
 
-" A normal object assignment
-syn match coffeeObjAssign /@\?\I\i*\s*:\@<!::\@!/
-\                         contains=@coffeeIdentifier,coffeeAssignOp
-hi def link coffeeObjAssign Identifier
+syntax match coffeeFunction /->\|=>/
+highlight default link coffeeFunction Function
 
-" An object-string assignment
-syn match coffeeObjStringAssign /\("\|'\)[^\1]*\1\s*;\@<!::\@!'\@!/
-\                               contains=coffeeAssignString,coffeeAssignOp
-" An object-integer assignment
-syn match coffeeObjNumberAssign /\d\+\%(\.\d\+\)\?\s*:\@<!::\@!/
-\                               contains=coffeeNumber,coffeeAssignOp
+syntax keyword coffeeTodo TODO FIXME XXX contained
+highlight default link coffeeTodo Todo
 
-syn keyword coffeeTodo TODO FIXME XXX contained
-hi def link coffeeTodo Todo
+syntax match coffeeComment /#.*/ contains=@Spell,coffeeTodo
+syntax match coffeeComment /####\@!\_.\{-}###/ contains=@Spell,coffeeTodo
+highlight default link coffeeComment Comment
 
-syn match coffeeComment /#.*/ contains=@Spell,coffeeTodo
-hi def link coffeeComment Comment
+syntax region coffeeHereComment start=/#/ end=/\ze\/\/\// end=/$/ contained contains=@Spell,coffeeTodo
+highlight default link coffeeHereComment coffeeComment
 
-syn region coffeeBlockComment start=/####\@!/ end=/###/
-\                             contains=@Spell,coffeeTodo
-hi def link coffeeBlockComment coffeeComment
+syntax region coffeeEmbed start=/`/ skip=/\\\\\|\\`/ end=/`/
+highlight default link coffeeEmbed Special
 
-" A comment in a heregex
-syn region coffeeHeregexComment start=/#/ end=/\ze\/\/\/\|$/ contained
-\                               contains=@Spell,coffeeTodo
-hi def link coffeeHeregexComment coffeeComment
+syntax region coffeeInterpolation matchgroup=coffeeInterpDelim
+\                                 start=/\#{/ end=/}/
+\                                 contained contains=TOP
+highlight default link coffeeInterpDelim Delimiter
 
-" Embedded JavaScript
-syn region coffeeEmbed matchgroup=coffeeEmbedDelim
-\                      start=/`/ skip=/\\\\\|\\`/ end=/`/
-\                      contains=@coffeeJS
-hi def link coffeeEmbedDelim Delimiter
+" Matches escape sequences like \000, \x00, \u0000, \n.
+syntax match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained
+highlight default link coffeeEscape SpecialChar
 
-syn region coffeeInterp matchgroup=coffeeInterpDelim start=/#{/ end=/}/ contained
-\                       contains=@coffeeAll
-hi def link coffeeInterpDelim PreProc
+" What is in a non-interpolated string
+syntax cluster coffeeSimpleString contains=@Spell,coffeeEscape
+" What is in an interpolated string
+syntax cluster coffeeInterpString contains=@coffeeSimpleString,
+\                                           coffeeInterpolation
 
-" A string escape sequence
-syn match coffeeEscape /\\\d\d\d\|\\x\x\{2\}\|\\u\x\{4\}\|\\./ contained display
-hi def link coffeeEscape SpecialChar
+syntax region coffeeRegExp start=/)\@<!\%(\%((\s*\|=\s\+\)\@<=\/\|\s\zs\/\s\@!\)/
+\                          end=/\/[gimy]\{,4}/ oneline
+\                          contains=@coffeeInterpString
+syntax region coffeeHereRegexp start=/\/\/\// end=/\/\/\/[gimy]\{,4}/ contains=@coffeeInterpString,coffeeHereComment fold
+highlight default link coffeeHereRegexp coffeeRegExp
+highlight default link coffeeRegExp String
 
-" A regex -- must not follow a parenthesis, number, or identifier, and must not
-" be followed by a number
-syn region coffeeRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/=\@!\s\@!/
-\                      skip=/\[[^\]]\{-}\/[^\]]\{-}\]/
-\                      end=/\/[gimy]\{,4}\d\@!/
-\                      oneline contains=@coffeeBasicString
-hi def link coffeeRegex String
+syntax region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString fold
+syntax region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeSimpleString fold
+highlight default link coffeeHeredoc String
 
-" A heregex
-syn region coffeeHeregex start=/\/\/\// end=/\/\/\/[gimy]\{,4}/
-\                        contains=@coffeeInterpString,coffeeHeregexComment
-\                        fold
-hi def link coffeeHeregex coffeeRegex
-
-" Heredoc strings
-syn region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
-\                        fold
-syn region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeBasicString
-\                        fold
-hi def link coffeeHeredoc String
-
-" An error for trailing whitespace, as long as the line isn't just whitespace
+" Displays an error for trailing whitespace.
 if !exists("coffee_no_trailing_space_error")
-  syn match coffeeSpaceError /\S\@<=\s\+$/ display
-  hi def link coffeeSpaceError Error
+  syntax match coffeeSpaceError /\S\@<=\s\+$/ display
+  highlight default link coffeeSpaceError Error
 endif
 
-" An error for trailing semicolons, for help transitioning from JavaScript
+" Displays an error for trailing semicolons.
 if !exists("coffee_no_trailing_semicolon_error")
-  syn match coffeeSemicolonError /;$/ display
-  hi def link coffeeSemicolonError Error
+  syntax match coffeeSemicolonError /;$/ display
+  highlight default link coffeeSemicolonError Error
 endif
 
-" Ignore reserved words in dot accesses.
-syn match coffeeDotAccess /\.\@<!\.\s*\I\i*/he=s+1 contains=@coffeeIdentifier
-hi def link coffeeDotAccess coffeeExtendedOp
-
-" Ignore reserved words in prototype accesses.
-syn match coffeeProtoAccess /::\s*\I\i*/he=s+2 contains=@coffeeIdentifier
-hi def link coffeeProtoAccess coffeeExtendedOp
-
-" This is required for interpolations to work.
-syn region coffeeCurlies matchgroup=coffeeCurly start=/{/ end=/}/
-\                        contains=@coffeeAll
-syn region coffeeBrackets matchgroup=coffeeBracket start=/\[/ end=/\]/
-\                         contains=@coffeeAll
-syn region coffeeParens matchgroup=coffeeParen start=/(/ end=/)/
-\                       contains=@coffeeAll
-
-" These are highlighted the same as commas since they tend to go together.
-hi def link coffeeBlock coffeeSpecialOp
-hi def link coffeeBracket coffeeBlock
-hi def link coffeeCurly coffeeBlock
-hi def link coffeeParen coffeeBlock
-
-" This is used instead of TOP to keep things coffee-specific for good
-" embedding. `contained` groups aren't included.
-syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
-\                              coffeeException,coffeeKeyword,coffeeOperator,
-\                              coffeeExtendedOp,coffeeSpecialOp,coffeeBoolean,
-\                              coffeeGlobal,coffeeSpecialVar,coffeeObject,
-\                              coffeeConstant,coffeeString,coffeeNumber,
-\                              coffeeFloat,coffeeReservedError,coffeeObjAssign,
-\                              coffeeObjStringAssign,coffeeObjNumberAssign,
-\                              coffeeComment,coffeeBlockComment,coffeeEmbed,
-\                              coffeeRegex,coffeeHeregex,coffeeHeredoc,
-\                              coffeeSpaceError,coffeeSemicolonError,
-\                              coffeeDotAccess,coffeeProtoAccess,
-\                              coffeeCurlies,coffeeBrackets,coffeeParens
-
-if !exists('b:current_syntax')
-  let b:current_syntax = 'coffee'
-endif
+" Reserved words can be used as dot-properties.
+syntax match coffeeDot /\.\@<!\.\i\+/ transparent
+\                                     contains=ALLBUT,@coffeeReserved,
+\                                                      coffeeReservedError
