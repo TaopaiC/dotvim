@@ -195,6 +195,13 @@ bundle/vividchalk:
   squashed: true
   type: git
   url: git://github.com/vitaly/vim-vividchalk.git
+bundle/zencoding-vim: 
+  branch: master
+  remote: master/braid/bundle/zencoding-vim
+  revision: f34dd90f731fa55a7f60f8b999de8344cd2f726d
+  squashed: true
+  type: git
+  url: git://github.com/mattn/zencoding-vim.git
 my_bundle/xterm-color-table.vim: 
   branch: master
   remote: braid/my-bundle/xterm-color-table.vim
