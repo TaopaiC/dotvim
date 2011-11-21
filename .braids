@@ -13,10 +13,24 @@ bundle/align:
   squashed: true
   type: git
   url: http://github.com/tsaleh/vim-align.git
+bundle/apidock: 
+  branch: master
+  remote: braid/bundle/apidock
+  revision: a0e19b4eb806cbd2571886518984cf4b740ec4f3
+  squashed: true
+  type: git
+  url: https://github.com/alexandrov/apidock.vim.git
+bundle/colors-solarized: 
+  branch: master
+  remote: master/braid/bundle/colors-solarized
+  revision: 528a59f26d12278698bb946f8fb82a63711eec21
+  squashed: true
+  type: git
+  url: https://github.com/altercation/vim-colors-solarized.git
 bundle/command-t: 
   branch: master
-  remote: braid/bundle/command-t
-  revision: 3c0dc0a392fbea847ac97efe25f774cf1f2dcda0
+  remote: master/braid/bundle/command-t
+  revision: a353ea1994cf0bc41d00a506afab572663137043
   squashed: true
   type: git
   url: git://git.wincent.com/command-t.git
@@ -36,22 +50,22 @@ bundle/delimitMate:
   url: http://github.com/Raimondi/delimitMate.git
 bundle/endwise: 
   branch: master
-  remote: braid/bundles/endwise
-  revision: 86e1d4ab9192245ae83831f073c0452f3b7baba8
+  remote: master/braid/bundles/endwise
+  revision: 9a9d1994eaeae3f2f23da6bb71111782ab70276c
   squashed: true
   type: git
   url: git://github.com/tpope/vim-endwise.git
 bundle/fugitive: 
   branch: master
-  remote: braid/bundles/fugitive
-  revision: 5f5c8da61fd817ba8dc091350b51c1ab7ca53c8d
+  remote: master/braid/bundles/fugitive
+  revision: 201bdd0eff4cd79847cf006f143deb62f8f97342
   squashed: true
   type: git
   url: git://github.com/tpope/vim-fugitive.git
 bundle/gundo.vim: 
   branch: master
-  remote: braid/bundle/gundo.vim
-  revision: 240efe741554246823723525a67ea0c39ba3ddfe
+  remote: master/braid/bundle/gundo.vim
+  revision: 12b6f67aeb892519385529b2b5cdda55cc428d9d
   squashed: true
   type: git
   url: http://github.com/sjl/gundo.vim.git
@@ -62,6 +76,20 @@ bundle/haml:
   squashed: true
   type: git
   url: git://github.com/tpope/vim-haml.git
+bundle/javaScriptLint: 
+  branch: master
+  remote: master/braid/bundle/javaScriptLint
+  revision: f4999532c67f7cf5a5c13346aaf22ce818e35994
+  squashed: true
+  type: git
+  url: https://github.com/joestelmach/javaScriptLint.vim.git
+bundle/jslint: 
+  branch: master
+  remote: master/braid/bundle/jslint
+  revision: 8605dd82733497929046b294f42a5e35dcd1f906
+  squashed: true
+  type: git
+  url: https://github.com/hallettj/jslint.vim.git
 bundle/nerdcommenter: 
   branch: master
   remote: braid/bundles/nerdcommenter
@@ -71,8 +99,8 @@ bundle/nerdcommenter:
   url: git://github.com/scrooloose/nerdcommenter.git
 bundle/nerdtree: 
   branch: master
-  remote: braid/bundles/nerdtree
-  revision: 2dd198c6c412b4ddd361b43586b01981e8383239
+  remote: master/braid/bundles/nerdtree
+  revision: 12f692f4369526f408e724fa74a0da527ebe2f2f
   squashed: true
   type: git
   url: git://github.com/scrooloose/nerdtree.git
@@ -85,15 +113,15 @@ bundle/pastie:
   url: git://github.com/tpope/vim-pastie.git
 bundle/rails: 
   branch: master
-  remote: braid/bundles/rails
-  revision: ed73244c7ef4535cfc3f6033fd92ba1032edca96
+  remote: master/braid/bundles/rails
+  revision: d94405aae64ff10fc10a78807b5e9214c83c60df
   squashed: true
   type: git
   url: git://github.com/tpope/vim-rails.git
 bundle/repeat: 
   branch: master
-  remote: braid/bundles/repeat
-  revision: c4101c205ef9e06bdfeff571a7dbba2576f08974
+  remote: master/braid/bundles/repeat
+  revision: cdffdd43816ddaeee858ae42da3ab6ddcfa25d19
   squashed: true
   type: git
   url: git://github.com/tpope/vim-repeat.git
@@ -113,8 +141,8 @@ bundle/space:
   url: git://github.com/scrooloose/vim-space.git
 bundle/surround: 
   branch: master
-  remote: braid/bundles/surround
-  revision: d9e6bfdd902fc661c8fd58ede248ccfc3b3039d7
+  remote: master/braid/bundles/surround
+  revision: f6c9d3beb2d11959d22b2555636aeb0c37e66aa1
   squashed: true
   type: git
   url: git://github.com/tpope/vim-surround.git
@@ -125,13 +153,41 @@ bundle/syntastic:
   squashed: true
   type: git
   url: git://github.com/scrooloose/syntastic.git
+bundle/tabular: 
+  branch: master
+  remote: master/braid/bundle/tabular
+  revision: b7b4d8791a50013b56c2d68b6c5708c808203b54
+  squashed: true
+  type: git
+  url: git://github.com/godlygeek/tabular.git
+bundle/tagbar: 
+  branch: master
+  remote: master/braid/bundle/tagbar
+  revision: 3c075654d424c6e3c20521bd4567b517a2410593
+  squashed: true
+  type: git
+  url: https://github.com/majutsushi/tagbar.git
+bundle/threesome: 
+  branch: master
+  remote: master/braid/bundle/threesome
+  revision: 389e0f55f14ccde138b7b5fb3690ee3c2059589d
+  squashed: true
+  type: git
+  url: https://github.com/sjl/threesome.vim.git
 bundle/unimpaired: 
   branch: master
-  remote: braid/bundles/unimpaired
-  revision: 5b7a9c3addc98684ce4739e22840866aa0726537
+  remote: master/braid/bundles/unimpaired
+  revision: b528beff95e0f71e04009b654758881972c8a625
   squashed: true
   type: git
   url: git://github.com/tpope/vim-unimpaired.git
+bundle/vim-bundler: 
+  branch: master
+  remote: master/braid/bundle/vim-bundler
+  revision: 595b29a16e0ff45e0332c18ba44cf0245da34dfe
+  squashed: true
+  type: git
+  url: https://github.com/tpope/vim-bundler.git
 bundle/vim-coffee-script: 
   branch: master
   remote: braid/bundles/vim-coffee-script
@@ -146,6 +202,27 @@ bundle/vim-indentobject:
   squashed: true
   type: git
   url: https://github.com/austintaylor/vim-indentobject.git
+bundle/vim-makegreen: 
+  branch: master
+  remote: master/braid/bundle/vim-makegreen
+  revision: eb04971f545a4656c19a5374b748bd6c0bc459a3
+  squashed: true
+  type: git
+  url: https://github.com/reinh/vim-makegreen.git
+bundle/vim-rake: 
+  branch: master
+  remote: master/braid/bundle/vim-rake
+  revision: 8a93dc7a57308e08f7d3c83f9824a1c43e12c5ba
+  squashed: true
+  type: git
+  url: https://github.com/tpope/vim-rake.git
+bundle/vim-ruby-refactoring: 
+  branch: master
+  remote: master/braid/bundle/vim-ruby-refactoring
+  revision: 5a06bf807d439f71c47c0f640fefbd46ffe10e18
+  squashed: true
+  type: git
+  url: https://github.com/ecomba/vim-ruby-refactoring.git
 bundle/vim-textobj-rubyblock: 
   branch: master
   remote: braid/bundle/vim-textobj-rubyblock
@@ -167,6 +244,13 @@ bundle/vividchalk:
   squashed: true
   type: git
   url: git://github.com/vitaly/vim-vividchalk.git
+bundle/zencoding-vim: 
+  branch: master
+  remote: master/braid/bundle/zencoding-vim
+  revision: f34dd90f731fa55a7f60f8b999de8344cd2f726d
+  squashed: true
+  type: git
+  url: git://github.com/mattn/zencoding-vim.git
 my_bundle/xterm-color-table.vim: 
   branch: master
   remote: braid/my-bundle/xterm-color-table.vim
@@ -176,8 +260,8 @@ my_bundle/xterm-color-table.vim:
   url: git://github.com/guns/xterm-color-table.vim.git
 vim-pathogen: 
   branch: master
-  remote: braid/vim-pathogen
-  revision: 7804dbd8d5109df67dae0363f8fbece84484f458
+  remote: master/braid/vim-pathogen
+  revision: a32131ce199621f48802167e584804ca97d5c346
   squashed: true
   type: git
   url: git://github.com/tpope/vim-pathogen.git

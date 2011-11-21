@@ -45,7 +45,7 @@ let g:Conque_TERM = 'xterm'
 " ,sh shell window
 nmap <Leader>sh :ConqueSplit bash<cr>
 " ,r run command
-nmap <Leader>r :ConqueSplit 
+nmap <Leader>R :ConqueSplit
 
 " yankring
 let g:yankring_replace_n_pkey = '<leader>['
@@ -59,12 +59,18 @@ nmap <leader>y :YRShow<cr>
 
 " command-t
 nmap <unique> <silent> <Leader><Leader> :CommandT<CR>
+nmap <unique> <silent> <Leader><Leader><Leader> :CommandTFlush<CR>:CommandT<CR>
 let g:CommandTMatchWindowAtTop=1
 
 " Fugitive
 " ,e for Ggrep
 nmap <leader>g :Ggrep 
 
+" ,f for global git serach for word under the cursor (with highlight)
+nmap <leader>f :let @/="\\<<C-R><C-W>\\>"<CR>:set hls<CR>:silent Ggrep -w "<C-R><C-W>"<CR>:ccl<CR>:cw<CR><CR>
+
+" same in visual mode
+:vmap <leader>f y:let @/=escape(@", '\\[]$^*.')<CR>:set hls<CR>:silent Ggrep -F "<C-R>=escape(@", '\\"#')<CR>"<CR>:ccl<CR>:cw<CR><CR>
 " Ack
 " ,a for Ack
 nmap <leader>k :Ack 

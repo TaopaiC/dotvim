@@ -1,6 +1,6 @@
 This is a complete Vim configuration that I'm using everywhere
 
-Plugins that are available form a git repository were added with
+Plugins that are available from a git repository were added with
 [Braid](http://github.com/evilchelu/braid) for easy upgrading.
 
 *Some* help tips are provided for *some* of the plugins. please check out the plugin's docs for more info.
@@ -18,16 +18,20 @@ From your homedirectory (on Linux/Mac OSX):
 * If you want to use command-t file finder plugin you need to compile native extension first.
   just run `make` at the top of .vim directory
 
-Note: if you alrady have `~/.vim` `~/.vimrc` REMOVE THEM (you might want to backup them ifirst :)
+Note: if you already have `~/.vim` `~/.vimrc` REMOVE THEM (you might want to backup them first :)
 
 #### General configuration
 
 `,` is used as mapleader
+`backslash` is used as localleader
 
 * `,e` mapped to `:e **/`. essentially you do `,efoo<tab>` to get a list of all files starting with foo
 * `,s` - toggle invisible characters display
+* `,n` - next `quicklist` result (like :Ggrep etc)
+* `,N` - previous `quicklist` result (like :Ggrep etc)
 * `Ctrl-E` - switch between 2 last buffers  (its just a `:b#<cr>` :)
 * `Ctrl-N` to cancel current search highlighing
+* `,f` global Ggrep for word under the cursor or for selection
 
 Check out the 'vimrc' file for more...
 
@@ -59,7 +63,7 @@ Check out the 'vimrc' file for more...
       * `Ctrl-s` - open file in a new split
       * `Ctrl-v` - open file in a new vertical split
       * `Ctrl-U` - clear current partial path
-      * `Esc` - calcel
+      * `Esc` - cancel
       * `Ctrl-c` - cancel
 
 *   autocomplpop 2.14.1 ([vim.org](http://www.vim.org/scripts/script.php?script_id=1879))
@@ -98,7 +102,7 @@ Check out the 'vimrc' file for more...
          Bring up the output of git-status in the preview
          window.  Press `-` to stage or unstage the file on the
          cursor line.  Press `p` to do so on a per hunk basis
-         (--patch).  Press `C` to invoke |:Gcommit|.
+         (--patch).  Press `C` to invoke :Gcommit.
 
     *    `:Gcommit [args]`
 
@@ -106,7 +110,15 @@ Check out the 'vimrc' file for more...
 
     *    `:Ggrep [args]`
 
-         |:grep| with git-grep as 'grepprg'.
+         :grep with git-grep as 'grepprg'.
+
+    *    `,g`
+
+         shortcut to run :Ggrep
+
+    *   `//`
+
+        global git search for the word under the cursor for for selection (in visual mode)
 
     *   `:Gblame`
 
@@ -115,6 +127,43 @@ Check out the 'vimrc' file for more...
         reblame the file as it was in that commit.
 
     Much more in the plugin's doc
+
+*   threesome ([homepage](http://sjl.bitbucket.org/threesome.vim/#demo)) ([vim.org](http://www.vim.org/scripts/script.php?script_id=3721)) ([github](https://github.com/sjl/threesome.vim))
+
+    A plugin for resolving conflicts during three-way merges.
+
+    Add the following lines to ~/.gitconfig to use
+
+    [merge]
+    tool = threesome
+
+    [mergetool "threesome"]
+    cmd = "mvim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
+    trustExitCode = true
+
+    Bindings:
+
+    * `\g` - switch to grid view
+    * `\l` - switch to loupe view
+    * `\c` - switch to compare view
+    * `\p` - switch to path view
+
+    * `\o` - select the original file
+    * `\1` - select file one
+    * `\2` - select file two
+    * `\r` - select the results file
+
+    * `\n` - next unresolved conflict
+    * `\N` - prev unresolved conflict
+
+    * `\<space>` - cycle layout
+    * `\s` - toggle scrolllocking
+    * `\d` - cycle diff combinations
+    * `\D` - turn off all diffs
+
+    * `\CC` - exits vim with error code (like :cquit). this will indicate to git that merge resolution failed
+
+    * `:h threesome` - you should probably read it ;)
 
 *   rails ([vim.org](http://www.vim.org/scripts/script.php?script_id=1567)) ([github](http://github.com/tpope/vim-rails))
 
@@ -128,7 +177,15 @@ Check out the 'vimrc' file for more...
     * `:Rinvert` - takes a self.up migration and writes a self.down.
     * `gf` - remapped to take context into account. recognizes models
       associations, partials etc.
-    * `:h rails` for more info ;)
+    * `:h rails` for much more info ;)
+
+*   vim-bundler ([github](https://github.com/tpope/vim-bundler))
+
+    Lightweight support for Ruby's Bundler
+
+    * `gf` when standing over a gem name in a Gemfile will go to gem's directory
+    * `:Bopen NAME` does bundle open NAME - opens gem NAME's lib diretory in the current window.
+    * `:Bundle` - runs bundler
 
 *   syntastic ([github](http://github.com/scrooloose/syntastic))
 
@@ -182,7 +239,7 @@ Check out the 'vimrc' file for more...
     This one is much better then vimsh that I was using before
 
     `,sh` - start a vimsh window
-    `,r`  - opens vim prompt for command to run
+    `,R`  - opens vim prompt for command to run
 
 *   vividchalk ([vim.org](http://www.vim.org/scripts/script.php?script_id=1891)) ([github](http://github.com/vitaly/vim-vividchalk))
 
@@ -239,7 +296,7 @@ Check out the 'vimrc' file for more...
 
     Replace a pattern across multiple files interactively
 
-    Use `:Gsearch` to search for pattenr. Edit the result buffer to your
+    Use `:Gsearch` to search for a pattern. Edit the result buffer to your
     liking, then `:Greplace` to incorporate your edits into the source files
 
     * `:Gsearch` - Search for a given pattern in the specified group of files
@@ -248,6 +305,27 @@ Check out the 'vimrc' file for more...
     * `:Greplace` - Incorporate the modifications from the replace buffer into
       the corresponding files.
 
+*   vim-ruby-refactoring ([github](https://github.com/ecomba/vim-ruby-refactoring))
+
+    Refactoring tool for Ruby in vim!
+
+    * `,rap`  :RAddParameter           - Add Parameter(s) to a method
+    * `,rcpc` :RConvertPostConditional - Convert Post Conditional
+    * `,rel`  :RExtractLet             - Extract to Let (Rspec)
+    * `,rec`  :RExtractConstant        - Extract Constant (visual selection)
+    * `,relv` :RExtractLocalVariable   - Extract Local Variable (visual selection)
+    * `,rit`  :RInlineTemp             - Inline Temp. replace temp parameter by direct function call
+    * `,rrlv` :RRenameLocalVariable    - Rename Local Variable (visual selection/variable under the cursor
+    * `,rriv` :RRenameInstanceVariable - Rename Instance Variable (visual selection)
+    * `,rem`  :RExtractMethod          - Extract Method (visual selection)
+
+*   apidoc ([github](https://github.com/alexandrov/apidock.vim))
+
+    Vim plugin that searches http://apidock.com Ruby, Rails, and RSpec docs from within Vim.
+
+    * `RR` - Search the Rails docs for the word under the cursor.
+    * `RB` - Search the Ruby docs for the word under the cursor.
+    * `RS` - Search the RSpec docs for the word under the cursor.
 
 #### "Support" and minor plugins
 
@@ -324,7 +402,7 @@ Check out the 'vimrc' file for more...
 
     syntax for [Markdown](http://daringfireball.net/projects/markdown/)
 
-*   coffe-script ([github](http://github.com/kchmck/vim-coffee-script))
+*   coffee-script ([github](http://github.com/kchmck/vim-coffee-script))
 
     syntax for [Coffee script](http://jashkenas.github.com/coffee-script/)
 
@@ -348,4 +426,7 @@ randomly chosen bits of vim goodness.
 * `ci` change inside delimiters
 * `di` delete inside delimiters
 * `@@` execute last macro
-
+* `"xyy` copy line into `x` register (replace x with any other)
+* `<C-R>x` while in insert mote will paste content of register x (replace x with any other)
+* `"xp` paste from register x
+* `:reg` Display the contents of all numbered and named registers.

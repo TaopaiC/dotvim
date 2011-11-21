@@ -1,4 +1,5 @@
 let mapleader = ","
+let maplocalleader = "\\"
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -22,8 +23,14 @@ nmap <leader>e :e **/
 map <S-Insert> <MiddleMouse>
 map! <S-Insert> <MiddleMouse>
 
-" ,n to get the next location (compilation errors, grep etC)
+" ,n to get the next location (compilation errors, grep etc)
 nmap <leader>n :cn<CR>
+nmap <leader>N :cp<CR>
 
 "set completeopt=menuone,preview,longest
 set completeopt=menuone,preview
+
+" driving me insane this thing
+nmap :W :w
+nmap :Q :q
+nmap :E :e
