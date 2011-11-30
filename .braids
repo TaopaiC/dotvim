@@ -30,7 +30,7 @@ bundle/colors-solarized:
 bundle/command-t: 
   branch: master
   remote: master/braid/bundle/command-t
-  revision: a353ea1994cf0bc41d00a506afab572663137043
+  revision: e9a861b34674608ffa70e26063674245cd4e0927
   squashed: true
   type: git
   url: git://git.wincent.com/command-t.git
