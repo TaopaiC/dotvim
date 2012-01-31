@@ -42,3 +42,7 @@ endif
 if has( "signs" ) == 0
   let loaded_showmarks = 1
 endif
+
+" Syntastic
+let g:syntastic_mode_map = {}
+let g:syntastic_mode_map['passive_filetypes'] = ['scss']
