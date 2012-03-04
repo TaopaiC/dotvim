@@ -78,8 +78,8 @@ bundle/jslint:
   url: https://github.com/hallettj/jslint.vim.git
 bundle/nerdcommenter: 
   branch: master
-  remote: braid/bundles/nerdcommenter
-  revision: b28e7be63235982501ab7dd30c03ea7feef7b095
+  remote: master/braid/bundles/nerdcommenter
+  revision: 98cec44ef6e8c93f89fb7911a03d7eaa75fe1249
   squashed: true
   type: git
   url: git://github.com/scrooloose/nerdcommenter.git
