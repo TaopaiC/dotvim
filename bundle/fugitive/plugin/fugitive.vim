@@ -115,7 +115,7 @@ function! s:ExtractGitDir(path) abort
   let fn = fnamemodify(path,':s?[\/]$??')
   let ofn = ""
   let nfn = fn
-  while fn != ofn
+  while fn !=# ofn && fn !=# '/'
     if filereadable(fn . '/.git/HEAD')
       return s:sub(simplify(fnamemodify(fn . '/.git',':p')),'\W$','')
     elseif fn =~ '\.git$' && filereadable(fn . '/HEAD')
@@ -818,13 +818,13 @@ function! s:Commit(args) abort
           let args = '--cleanup=strip '.args
         endif
         if bufname('%') == '' && line('$') == 1 && getline(1) == '' && !&mod
-          keepalt edit `=msgfile`
+          execute 'keepalt edit '.s:fnameescape(msgfile)
         elseif s:buffer().type() ==# 'index'
-          keepalt edit `=msgfile`
+          execute 'keepalt edit '.s:fnameescape(msgfile)
           execute (search('^#','n')+1).'wincmd+'
           setlocal nopreviewwindow
         else
-          keepalt split `=msgfile`
+          execute 'keepalt split '.s:fnameescape(msgfile)
         endif
         let b:fugitive_commit_arguments = args
         setlocal bufhidden=delete filetype=gitcommit
@@ -1228,6 +1228,9 @@ function! s:diffthis()
     let w:fugitive_diff_restore .= &l:wrap ? ' wrap' : ' nowrap'
     let w:fugitive_diff_restore .= ' foldmethod=' . &l:foldmethod
     let w:fugitive_diff_restore .= ' foldcolumn=' . &l:foldcolumn
+    if has('cursorbind')
+      let w:fugitive_diff_restore .= (&l:cursorbind ? ' ' : ' no') . 'cursorbind'
+    endif
     diffthis
   endif
 endfunction
@@ -1480,7 +1483,7 @@ function! s:Blame(bang,line1,line2,count,args) abort
         let top = line('w0') + &scrolloff
         let current = line('.')
         let s:temp_files[temp] = s:repo().dir()
-        exe 'leftabove vsplit '.temp
+        exe 'keepalt leftabove vsplit '.temp
         let b:fugitive_blamed_bufnr = bufnr
         let w:fugitive_leave = restore
         let b:fugitive_blame_arguments = join(a:args,' ')
@@ -1887,6 +1890,7 @@ function! s:BufReadIndex()
     nnoremap <buffer> <silent> cA :<C-U>Gcommit --amend --reuse-message=HEAD<CR>
     nnoremap <buffer> <silent> ca :<C-U>Gcommit --amend<CR>
     nnoremap <buffer> <silent> cc :<C-U>Gcommit<CR>
+    nnoremap <buffer> <silent> cv :<C-U>Gcommit -v<CR>
     nnoremap <buffer> <silent> D :<C-U>execute <SID>StageDiff('Gvdiff')<CR>
     nnoremap <buffer> <silent> dd :<C-U>execute <SID>StageDiff('Gvdiff')<CR>
     nnoremap <buffer> <silent> dh :<C-U>execute <SID>StageDiff('Gsdiff')<CR>
