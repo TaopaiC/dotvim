@@ -176,8 +176,8 @@ bundle/vim-bundler:
   url: https://github.com/tpope/vim-bundler.git
 bundle/vim-coffee-script: 
   branch: master
-  remote: braid/bundles/vim-coffee-script
-  revision: dc1692561461fd0b7642e05b03b7670974112eee
+  remote: master/braid/bundles/vim-coffee-script
+  revision: e63094684bf6c6a99485e76b786999443d346d94
   squashed: true
   type: git
   url: http://github.com/kchmck/vim-coffee-script.git
