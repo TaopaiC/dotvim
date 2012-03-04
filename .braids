@@ -244,6 +244,13 @@ my_bundle/xterm-color-table.vim:
   squashed: true
   type: git
   url: git://github.com/guns/xterm-color-table.vim.git
+ubndle/command-t: 
+  branch: master
+  remote: master/braid/ubndle/command-t
+  revision: 8df5676d30bac725db6c9f86fb1c997f65eaa2fb
+  squashed: true
+  type: git
+  url: https://github.com/vim-scripts/Command-T.git
 vim-pathogen: 
   branch: master
   remote: master/braid/vim-pathogen
