@@ -149,7 +149,7 @@ bundle/tabular:
 bundle/tagbar: 
   branch: master
   remote: master/braid/bundle/tagbar
-  revision: 4cc123f3f2fc5b952254c7a520688d7966a0119c
+  revision: 134207bc41f3479b3a3557ea8378146e085f336e
   squashed: true
   type: git
   url: https://github.com/majutsushi/tagbar.git
