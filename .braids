@@ -237,6 +237,13 @@ bundle/zencoding-vim:
   squashed: true
   type: git
   url: git://github.com/mattn/zencoding-vim.git
+my_bundle/Command-T: 
+  branch: master
+  remote: master/braid/my-bundle/Command-T
+  revision: 8df5676d30bac725db6c9f86fb1c997f65eaa2fb
+  squashed: true
+  type: git
+  url: https://github.com/vim-scripts/Command-T.git
 my_bundle/xterm-color-table.vim: 
   branch: master
   remote: braid/my-bundle/xterm-color-table.vim
