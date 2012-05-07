@@ -1,7 +1,7 @@
 "=============================================================================
 " zencoding.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 21-Feb-2012.
+" Last Change: 07-May-2012.
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -66,12 +66,20 @@ function! s:zen_parseIntoTree(abbr, type)
     let rabbr = s:zen_getExpandos(type, abbr)
     if rabbr == abbr
       " try 'foo+(' to (foo-x)
-      let rabbr = substitute(abbr, '\([a-zA-Z][a-zA-Z0-9+]*\)+\([()]\|$\)', '\="(".s:zen_getExpandos(type, submatch(1)).")".submatch(2)', 'i')
+      let rabbr = substitute(abbr, '\%(+\|^\)\([a-zA-Z][a-zA-Z0-9+]\+\)+\([(){}>]\|$\)', '\="(".s:zen_getExpandos(type, submatch(1)).")".submatch(2)', 'i')
     endif
     let abbr = rabbr
-    let mx = '\([+>]\|<\+\)\{-}\s*\((*\)\{-}\s*\([@#.]\{-}[a-zA-Z\!][a-zA-Z0-9:_\!\-$]*\|{.\+}\)\(\%(\%(#{[{}a-zA-Z0-9_\-\$]\+\|#[a-zA-Z0-9_\-\$]\+\)\|\%(\[[^\]]\+\]\)\|\%(\.{[{}a-zA-Z0-9_\-\$]\+\|\.[a-zA-Z0-9_\-\$]\+\)\)*\)\%(\({[^}]\+}\)\)\{0,1}\%(\s*\*\s*\([0-9]\+\)\s*\)\{0,1}\(\%(\s*)\%(\s*\*\s*[0-9]\+\s*\)\{0,1}\)*\)'
+    let mx = '\([+>]\|<\+\)\{-}\s*\((*\)\{-}\s*\([@#.]\{-}[a-zA-Z\!][a-zA-Z0-9:_\!\-$]*\|'
+    \       .'{.\{-}}[ \t\r\n}]*\)\(\%(\%(#{[{}a-zA-Z0-9_\-\$]\+\|'
+    \       .'#[a-zA-Z0-9_\-\$]\+\)\|\%(\[[^\]]\+\]\)\|'
+    \       .'\%(\.{[{}a-zA-Z0-9_\-\$]\+\|'
+    \       .'\.[a-zA-Z0-9_\-\$]\+\)\)*\)\%(\({[^}]\+}\+\)\)\{0,1}\%(\s*\*\s*\([0-9]\+\)\s*\)\{0,1}\(\%(\s*)\%(\s*\*\s*[0-9]\+\s*\)\{0,1}\)*\)'
   else
-    let mx = '\([+>]\|<\+\)\{-}\s*\((*\)\{-}\s*\([@#.]\{-}[a-zA-Z\!][a-zA-Z0-9:_\!\+\-]*\|{.\+}\)\(\%(\%(#{[{}a-zA-Z0-9_\-\$]\+\|#[a-zA-Z0-9_\-\$]\+\)\|\%(\[[^\]]\+\]\)\|\%(\.{[{}a-zA-Z0-9_\-\$]\+\|\.[a-zA-Z0-9_\-\$]\+\)\)*\)\%(\({[^}]\+}\)\)\{0,1}\%(\s*\*\s*\([0-9]\+\)\s*\)\{0,1}\(\%(\s*)\%(\s*\*\s*[0-9]\+\s*\)\{0,1}\)*\)'
+    let mx = '\([+>]\|<\+\)\{-}\s*\((*\)\{-}\s*\([@#.]\{-}[a-zA-Z\!][a-zA-Z0-9:_\!\+\-]*\|'
+    \       .'{\+.\{-}}[ \t\r\n}]*\)\(\%(\%(#{[{}a-zA-Z0-9_\-\$]\+\|'
+    \       .'#[a-zA-Z0-9_\-\$]\+\)\|\%(\[[^\]]\+\]\)\|'
+    \       .'\%(\.{[{}a-zA-Z0-9_\-\$]\+\|'
+    \       .'\.[a-zA-Z0-9_\-\$]\+\)\)*\)\%(\({[^}]\+}\+\)\)\{0,1}\%(\s*\*\s*\([0-9]\+\)\s*\)\{0,1}\(\%(\s*)\%(\s*\*\s*[0-9]\+\s*\)\{0,1}\)*\)'
   endif
   let root = { 'name': '', 'attr': {}, 'child': [], 'snippet': '', 'multiplier': 1, 'parent': {}, 'value': '', 'pos': 0, 'important': 0 }
   let parent = root
@@ -658,11 +666,11 @@ function! s:zen_getFileType()
   if synIDattr(synID(line("."), col("."), 1), "name") =~ '^html'
     let type = 'html'
   endif
-  if synIDattr(synID(line("."), col("."), 1), "name") =~ '^xml'
-    let type = 'xml'
-  endif
   if synIDattr(synID(line("."), col("."), 1), "name") =~ '^javaScript'
     let type = 'javascript'
+  endif
+  if len(type) == 0 && synIDattr(synID(line("."), col("."), 1), "name") =~ '^xml'
+    let type = 'xml'
   endif
   if len(type) == 0 | let type = 'html' | endif
   return type
@@ -708,9 +716,14 @@ function! zencoding#expandAbbr(mode) range
           let lpart = substitute(lpart, '^[0-9.-]\+\s\+', '', '')
           let lpart = substitute(lpart, '\s\+$', '', '')
         endif
-        let expand = substitute(expand, '\$line'.(n-a:firstline+1).'\$', lpart, 'g')
+        let expand = substitute(expand, '\$line'.(n-a:firstline+1).'\$', '\=lpart', 'g')
       endfor
       let expand = substitute(expand, '\$line\d*\$', '', 'g')
+      let content = join(getline(a:firstline, a:lastline), "\n")
+      if stridx(expand, '$#') < len(expand)-2
+        let expand = substitute(expand, '^\(.*\)\$#\s*$', '\1', '')
+      endif
+      let expand = substitute(expand, '\$#', '\=content', 'g')
     else
       let str = ''
       if visualmode() ==# 'V'
@@ -732,7 +745,6 @@ function! zencoding#expandAbbr(mode) range
         silent! normal! gvygv
         let str = @"
         call setreg('"', save_regcont, save_regtype)
-        "let str .= getline(a:firstline)
         let items = s:zen_parseIntoTree(leader . "{".str."}", type).child
       endif
       for item in items
@@ -789,15 +801,16 @@ function! zencoding#expandAbbr(mode) range
       if a:firstline == a:lastline
         let expand = substitute(expand, '\n\s*', '', 'g')
       else
-        let expand = substitute(expand, '\n\s*', '\n', 'g')
         let expand = substitute(expand, '\n$', '', 'g')
       endif
       let expand = substitute(expand, '\${cursor}', '$cursor$', '')
       let expand = substitute(expand, '\${cursor}', '', 'g')
-      silent! normal! gvc
+      silent! normal! gv
+      let col = col("'<")
+      silent! normal! c
       let line = getline('.')
-      let lhs = matchstr(line, '.*\%'.col('.').'c.')
-      let rhs = matchstr(line, '\%>'.col('.').'c.*')
+      let lhs = matchstr(line, '.*\%'.(col-1).'c.')
+      let rhs = matchstr(line, '\%>'.(col-1).'c.*')
       let expand = lhs.expand.rhs
       let lines = split(expand, '\n')
       call setline(line('.'), lines[0])
@@ -1194,10 +1207,6 @@ function! s:get_content_from_url(url, utf8)
     silent! exec '0r!'.g:zencoding_curl_command.' "'.substitute(a:url, '#.*', '', '').'"'
   endif
   let ret = join(getline(1, '$'), "\n")
-  let ic = iconv(ret, "utf-8", &encoding)
-  if ret != ic
-    let ret = ic
-  endif
   silent! bw!
   return ret
 endfunction
@@ -2147,6 +2156,7 @@ let s:zen_settings = {
 \            'var': 'xsl:variable',
 \            'vari': 'xsl:variable',
 \            'if': 'xsl:if',
+\            'choose': 'xsl:choose',
 \            'call': 'xsl:call-template',
 \            'wp': 'xsl:with-param',
 \            'par': 'xsl:param',
