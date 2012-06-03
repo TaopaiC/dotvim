@@ -1,8 +1,8 @@
 "=============================================================================
 " File: zencoding.vim
 " Author: Yasuhiro Matsumoto <mattn.jp@gmail.com>
-" Last Change: 02-May-2012.
-" Version: 0.60
+" Last Change: 03-Jun-2012.
+" Version: 0.72
 " WebPage: http://github.com/mattn/zencoding-vim
 " Description: vim plugins for HTML and CSS hi-speed coding.
 " SeeAlso: http://code.google.com/p/zen-coding/
@@ -92,15 +92,15 @@ endif
 
 function! s:install_plugin()
   for item in [
-  \ {'mode': 'i', 'var': 'user_zen_expandabbr_key', 'key': ',', 'plug': 'ZenCodingExpandAbbr', 'func': '<c-g>u<esc>:call zencoding#expandAbbr(0)<cr>a'},
-  \ {'mode': 'v', 'var': 'user_zen_expandabbr_key', 'key': ',', 'plug': 'ZenCodingExpandVisual', 'func': ':call zencoding#expandAbbr(2)<cr>'},
-  \ {'mode': 'n', 'var': 'user_zen_expandabbr_key', 'key': ',', 'plug': 'ZenCodingExpandNormal', 'func': ':call zencoding#expandAbbr(3)<cr>'},
-  \ {'mode': 'i', 'var': 'user_zen_expandword_key', 'key': ';', 'plug': 'ZenCodingExpandWord', 'func': '<c-g>u<esc>:call zencoding#expandAbbr(1)<cr>a'},
-  \ {'mode': 'n', 'var': 'user_zen_expandword_key', 'key': ',', 'plug': 'ZenCodingExpandWord', 'func': ':call zencoding#expandAbbr(1)<cr>'},
-  \ {'mode': 'i', 'var': 'user_zen_balancetaginward_key', 'key': 'd', 'plug': 'ZenCodingBalanceTagInwardInsert', 'func': '<esc>:call zencoding#balanceTag(1)<cr>a'},
+  \ {'mode': 'i', 'var': 'user_zen_expandabbr_key', 'key': ',', 'plug': 'ZenCodingExpandAbbr', 'func': '<c-g>u<esc>:call zencoding#expandAbbr(0,"")<cr>a'},
+  \ {'mode': 'v', 'var': 'user_zen_expandabbr_key', 'key': ',', 'plug': 'ZenCodingExpandVisual', 'func': ':call zencoding#expandAbbr(2,"")<cr>'},
+  \ {'mode': 'n', 'var': 'user_zen_expandabbr_key', 'key': ',', 'plug': 'ZenCodingExpandNormal', 'func': ':call zencoding#expandAbbr(3,"")<cr>'},
+  \ {'mode': 'i', 'var': 'user_zen_expandword_key', 'key': ';', 'plug': 'ZenCodingExpandWord', 'func': '<c-g>u<esc>:call zencoding#expandAbbr(1,"")<cr>a'},
+  \ {'mode': 'n', 'var': 'user_zen_expandword_key', 'key': ',', 'plug': 'ZenCodingExpandWord', 'func': ':call zencoding#expandAbbr(1,"")<cr>'},
+  \ {'mode': 'i', 'var': 'user_zen_balancetaginward_key', 'key': 'd', 'plug': 'ZenCodingBalanceTagInwardInsert', 'func': '<esc>:call zencoding#balanceTag(1)<cr>'},
   \ {'mode': 'n', 'var': 'user_zen_balancetaginward_key', 'key': 'd', 'plug': 'ZenCodingBalanceTagInwardNormal', 'func': ':call zencoding#balanceTag(1)<cr>'},
   \ {'mode': 'v', 'var': 'user_zen_balancetaginward_key', 'key': 'd', 'plug': 'ZenCodingBalanceTagInwardVisual', 'func': ':call zencoding#balanceTag(2)<cr>'},
-  \ {'mode': 'i', 'var': 'user_zen_balancetagoutward_key', 'key': 'D', 'plug': 'ZenCodingBalanceTagOutwardInsert', 'func': '<esc>:call zencoding#balanceTag(-1)<cr>a'},
+  \ {'mode': 'i', 'var': 'user_zen_balancetagoutward_key', 'key': 'D', 'plug': 'ZenCodingBalanceTagOutwardInsert', 'func': '<esc>:call zencoding#balanceTag(-1)<cr>'},
   \ {'mode': 'n', 'var': 'user_zen_balancetagoutward_key', 'key': 'D', 'plug': 'ZenCodingBalanceTagOutwardNormal', 'func': ':call zencoding#balanceTag(-1)<cr>'},
   \ {'mode': 'v', 'var': 'user_zen_balancetagoutward_key', 'key': 'D', 'plug': 'ZenCodingBalanceTagOutwardVisual', 'func': ':call zencoding#balanceTag(-2)<cr>'},
   \ {'mode': 'i', 'var': 'user_zen_next_key', 'key': 'n', 'plug': 'ZenCodingNext', 'func': '<esc>:call zencoding#moveNextPrev(0)<cr>'},
@@ -139,6 +139,8 @@ function! s:install_plugin()
 endfunction
 call s:install_plugin()
 delfunction s:install_plugin
+
+command! -nargs=1 Zen call zencoding#expandAbbr(4, <q-args>)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

@@ -233,7 +233,7 @@ bundle/vividchalk:
 bundle/zencoding-vim: 
   branch: master
   remote: master/braid/bundle/zencoding-vim
-  revision: e1015e84709454e26277df33b6dbb7dace1d65a7
+  revision: 3d3ae065eb4de2a9d6f9541aa2867cfc2dadb813
   squashed: true
   type: git
   url: git://github.com/mattn/zencoding-vim.git

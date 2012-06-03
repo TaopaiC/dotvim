@@ -2,7 +2,15 @@ if exists('g:user_zen_settings')
   let s:old_user_zen_settings = g:user_zen_settings
   unlet! g:user_zen_settings
 endif
-so plugin/zencoding.vim
+
+function! s:reload(d)
+  exe "so" a:d."/plugin/zencoding.vim"
+  for f in split(globpath(a:d, 'autoload/**/*.vim'), "\n")
+    silent! exe "so" f
+  endfor
+endfunction
+
+call s:reload(expand('<sfile>:h'))
 
 function! s:show_category(category)
   echohl MatchParen | echon "[" a:category "]\n" | echohl None
@@ -15,6 +23,13 @@ function! s:show_title(no, title)
   echohl None | echon ": " . (len(a:title) < width ? (a:title.repeat(' ', width-len(a:title))) : strpart(a:title, 0, width)) . ' ... '
 endfunction
 
+function! s:show_skip(no, title)
+  let width = &columns - 23
+  echohl WarningMsg | echon "\rskipped #".printf("%03d", a:no)
+  echohl None | echon ": " . (len(a:title) < width ? (a:title.repeat(' ', width-len(a:title))) : strpart(a:title, 0, width)) . ' ... '
+  echo ""
+endfunction
+
 function! s:show_ok()
   echohl Title | echon "ok\n" | echohl None
   echo ""
@@ -24,8 +39,20 @@ function! s:show_ng(no, expect, got)
   echohl WarningMsg | echon "ng\n" | echohl None
   echohl ErrorMsg | echo "failed test #".a:no | echohl None
   set more
-  echo "    expect:".a:expect
-  echo "       got:".a:got
+  echohl WarningMsg | echo printf("expect(%d):", len(a:expect)) | echohl None
+  echo join(split(a:expect, "\n", 1), "|\n")
+  echohl WarningMsg | echo printf("got(%d):", len(a:got)) | echohl None
+  echo join(split(a:got, "\n", 1), "|\n")
+  let cs = split(a:expect, '\zs')
+  for c in range(len(cs))
+    if c < len(a:got)
+      if a:expect[c] != a:got[c]
+        echohl WarningMsg | echo "differ at:" | echohl None
+        echo a:expect[c :-1]
+        break
+      endif
+    endif
+  endfor
   echo ""
   throw "stop"
 endfunction
@@ -38,12 +65,49 @@ function! s:testExpandAbbr()
     let tests = testgroup.tests
     let start = reltime()
     for n in range(len(tests))
-      call s:show_title(n+1, tests[n].name)
-      unlet! res | let res = zencoding#ExpandWord(tests[n].query, tests[n].type, 0)
-      if res == tests[n].result
-        call s:show_ok()
+      let type = tests[n].type
+      let name = tests[n].name
+      let query = tests[n].query
+      let result = tests[n].result
+      if has_key(tests[n], 'skip') && tests[n].skip != 0
+        call s:show_skip(n+1, name)
+        continue
+      endif
+      if stridx(query, '$$$$') != -1
+        silent! 1new
+        silent! exe "setlocal ft=".type
+        silent! let key = matchstr(query, '.*\$\$\$\$\zs.*\ze\$\$\$\$')
+        if len(key) > 0
+          exe printf('let key = "%s"', key)
+        else
+          let key = "\<c-y>,"
+        endif
+        silent! let query = substitute(query, '\$\$\$\$.*\$\$\$\$', '$$$$', '')
+        silent! call setline(1, query)
+        let cmd = "normal gg0/\\$\\$\\$\\$\ri\<del>\<del>\<del>\<del>".key
+        if stridx(result, '$$$$') != -1
+          let cmd .= '$$$$'
+        endif
+        silent! exe cmd
+        unlet! res | let res = join(getline(1, line('$')), "\n")
+        silent! bw!
+        call s:show_title(n+1, name)
       else
-        call s:show_ng(n+1, tests[n].result, res)
+        call s:show_title(n+1, name)
+        unlet! res | let res = zencoding#ExpandWord(query, type, 0)
+      endif
+      if stridx(result, '$$$$') != -1
+        if res == result
+          call s:show_ok()
+        else
+          call s:show_ng(n+1, result, res)
+        endif
+      else
+        if res == result
+          call s:show_ok()
+        else
+          call s:show_ng(n+1, result, res)
+        endif
       endif
     endfor
     echo "past:".reltimestr(reltime(start))."\n"
@@ -185,7 +249,7 @@ finish
       'name': "html:xt>div#header>div#logo+ul#nav>li.item-$*5>a",
       'query': "html:xt>div#header>div#logo+ul#nav>li.item-$*5>a",
       'type': "html",
-      'result': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />\n\t<title></title>\n</head>\n<body>\n\t<div id=\"header\">\n\t\t<div id=\"logo\"></div>\n\t\t<ul id=\"nav\">\n\t\t\t<li class=\"item-1\">\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</li>\n\t\t\t<li class=\"item-2\">\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</li>\n\t\t\t<li class=\"item-3\">\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</li>\n\t\t\t<li class=\"item-4\">\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</li>\n\t\t\t<li class=\"item-5\">\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</li>\n\t\t</ul>\n\t</div>\n\t\n</body>\n</html>",
+      'result': "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />\n\t<title></title>\n</head>\n<body>\n\t<div id=\"header\">\n\t\t<div id=\"logo\"></div>\n\t\t<ul id=\"nav\">\n\t\t\t<li class=\"item-1\"><a href=\"\"></a></li>\n\t\t\t<li class=\"item-2\"><a href=\"\"></a></li>\n\t\t\t<li class=\"item-3\"><a href=\"\"></a></li>\n\t\t\t<li class=\"item-4\"><a href=\"\"></a></li>\n\t\t\t<li class=\"item-5\"><a href=\"\"></a></li>\n\t\t</ul>\n\t</div>\n\t\n</body>\n</html>",
     },
     {
       'name': "ol>li*2",
@@ -248,22 +312,22 @@ finish
       'result': "<a href=\"\"></a>\n<b></b>\n",
     },
     {
-      'name': "a>b>c<d",
-      'query': "a>b>c<d",
+      'name': "a>b>i<b",
+      'query': "a>b>i<b",
       'type': "html",
-      'result': "<a href=\"\"><b><c></c></b><d></d></a>\n",
+      'result': "<a href=\"\"><b><i></i></b><b></b></a>\n",
     },
     {
-      'name': "a>b>c<<d",
-      'query': "a>b>c<<d",
+      'name': "a>b>i<<b",
+      'query': "a>b>i<<b",
       'type': "html",
-      'result': "<a href=\"\"><b><c></c></b></a>\n<d></d>\n",
+      'result': "<a href=\"\"><b><i></i></b></a>\n<b></b>\n",
     },
     {
-      'name': "blockquote>b>c<<d",
-      'query': "blockquote>b>c<<d",
+      'name': "blockquote>b>i<<b",
+      'query': "blockquote>b>i<<b",
       'type': "html",
-      'result': "<blockquote>\n\t<b><c></c></b>\n</blockquote>\n<d></d>\n",
+      'result': "<blockquote><b><i></i></b></blockquote>\n<b></b>\n",
     },
     {
       'name': "a[href=foo][class=bar]",
@@ -356,10 +420,10 @@ finish
       'result': "<div id=\"header\">\n\t<li></li>\n</div>\n<div id=\"content\"></div>\n",
     },
     {
-      'name': "a>b>c<<div",
-      'query': "a>b>c<<div",
+      'name': "a>b>i<<div",
+      'query': "a>b>i<<div",
       'type': "html",
-      'result': "<a href=\"\"><b><c></c></b></a>\n<div></div>\n",
+      'result': "<a href=\"\"><b><i></i></b></a>\n<div></div>\n",
     },
     {
       'name': "(#header>h1)+#content+#footer",
@@ -371,7 +435,7 @@ finish
       'name': "(#header>h1)+(#content>(#main>h2+div#entry$.section*5>(h3>a)+div>p*3+ul+)+(#utilities))+(#footer>address)",
       'query': "(#header>h1)+(#content>(#main>h2+div#entry$.section*5>(h3>a)+div>p*3+ul+)+(#utilities))+(#footer>address)",
       'type': "html",
-      'result': "<div id=\"header\">\n\t<h1></h1>\n</div>\n<div id=\"content\">\n\t<div id=\"main\">\n\t\t<h2></h2>\n\t\t<div id=\"entry1\" class=\"section\">\n\t\t\t<h3>\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry2\" class=\"section\">\n\t\t\t<h3>\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry3\" class=\"section\">\n\t\t\t<h3>\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry4\" class=\"section\">\n\t\t\t<h3>\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry5\" class=\"section\">\n\t\t\t<h3>\n\t\t\t\t<a href=\"\"></a>\n\t\t\t</h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<div id=\"utilities\"></div>\n</div>\n<div id=\"footer\">\n\t<address></address>\n</div>\n",
+      'result': "<div id=\"header\">\n\t<h1></h1>\n</div>\n<div id=\"content\">\n\t<div id=\"main\">\n\t\t<h2></h2>\n\t\t<div id=\"entry1\" class=\"section\">\n\t\t\t<h3><a href=\"\"></a></h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry2\" class=\"section\">\n\t\t\t<h3><a href=\"\"></a></h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry3\" class=\"section\">\n\t\t\t<h3><a href=\"\"></a></h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry4\" class=\"section\">\n\t\t\t<h3><a href=\"\"></a></h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t\t<div id=\"entry5\" class=\"section\">\n\t\t\t<h3><a href=\"\"></a></h3>\n\t\t\t<div>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<p></p>\n\t\t\t\t<ul>\n\t\t\t\t\t<li></li>\n\t\t\t\t</ul>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<div id=\"utilities\"></div>\n</div>\n<div id=\"footer\">\n\t<address></address>\n</div>\n",
     },
     {
       'name': "(div>(ul*2)*2)+(#utilities)",
@@ -431,7 +495,7 @@ finish
       'name': "div>a#foo{bar}",
       'query': "div>a#foo{bar}",
       'type': "html",
-      'result': "<div>\n\t<a id=\"foo\" href=\"\">bar</a>\n</div>\n",
+      'result': "<div><a id=\"foo\" href=\"\">bar</a></div>\n",
     },
     {
       'name': ".content{Hello!}",
@@ -457,6 +521,48 @@ finish
       'type': "html",
       'result': "<a href=\"\">&</a>\n<div>&&</div>\n",
     },
+    {
+      'name': "<foo/>span$$$$\\<c-y>,$$$$",
+      'query': "<foo/>span$$$$\\<c-y>,$$$$",
+      'type': "html",
+      'result': "<foo/><span></span>",
+    },
+    {
+      'name': "foo span$$$$\\<c-y>,$$$$",
+      'query': "foo span$$$$\\<c-y>,$$$$",
+      'type': "html",
+      'result': "foo <span></span>",
+    },
+    {
+      'name': "foo span$$$$\\<c-y>,$$$$ bar",
+      'query': "foo span$$$$\\<c-y>,$$$$ bar",
+      'type': "html",
+      'result': "foo <span></span> bar",
+    },
+    {
+      'name': "foo $$$$\\<c-o>ve\\<c-y>,p\\<cr>$$$$bar baz",
+      'query': "foo $$$$\\<c-o>ve\\<c-y>,p\\<cr>$$$$bar baz",
+      'type': "html",
+      'result': "foo <p>bar</p> baz",
+    },
+    {
+      'name': "foo $$$$\\<c-o>vee\\<c-y>,p\\<cr>$$$$bar baz",
+      'query': "foo $$$$\\<c-o>vee\\<c-y>,p\\<cr>$$$$bar baz",
+      'type': "html",
+      'result': "foo <p>bar baz</p>",
+    },
+    {
+      'name': "f div.boxes>article.box2>header>(hgroup>h2{aaa}+h3{bbb})+p{ccc}$$$$",
+      'query': "f div.boxes>article.box2>header>(hgroup>h2{aaa}+h3{bbb})+p{ccc}$$$$",
+      'type': "html",
+      'result': "f <div class=\"boxes\">\n\t<article class=\"box2\">\n\t\t<header>\n\t\t\t<hgroup>\n\t\t\t\t<h2>aaa</h2>\n\t\t\t\t<h3>bbb</h3>\n\t\t\t</hgroup>\n\t\t\t<p>ccc</p>\n\t\t</header>\n\t</article>\n</div>",
+    },
+    {
+      'name': "div.boxes>(div.box2>section>h2{a}+p{b})+(div.box1>section>h2{c}+p{d}+p{e}+(bq>h2{f}+h3{g})+p{h})",
+      'query': "div.boxes>(div.box2>section>h2{a}+p{b})+(div.box1>section>h2{c}+p{d}+p{e}+(bq>h2{f}+h3{g})+p{h})",
+      'type': "html",
+      'result': "<div class=\"boxes\">\n\t<div class=\"box2\">\n\t\t<section>\n\t\t\t<h2>a</h2>\n\t\t\t<p>b</p>\n\t\t</section>\n\t</div>\n\t<div class=\"box1\">\n\t\t<section>\n\t\t\t<h2>c</h2>\n\t\t\t<p>d</p>\n\t\t\t<p>e</p>\n\t\t\t<blockquote>\n\t\t\t\t<h2>f</h2>\n\t\t\t\t<h3>g</h3>\n\t\t\t</blockquote>\n\t\t\t<p>h</p>\n\t\t</section>\n\t</div>\n</div>\n",
+    },
   ],
 },
 {
@@ -481,10 +587,10 @@ finish
       'result': "float: left;",
     },
     {
-      'name': "bg+",
-      'query': "bg+",
+      'name': "bg+$$$$",
+      'query': "bg+$$$$",
       'type': "css",
-      'result': "background: #FFF url() 0 0 no-repeat;",
+      'result': "background: #FFF url($$$$) 0 0 no-repeat;",
     },
   ],
 },
@@ -495,12 +601,12 @@ finish
       'name': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}",
       'query': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}",
       'type': "haml",
-      'result': "<div>\n\t<p></p>\n\t<ul id=\"foo\">\n\t\t<li foo=\"bar\" bar=\"baz\" class=\"bar1\">baz</li>\n\t\t<li foo=\"bar\" bar=\"baz\" class=\"bar2\">baz</li>\n\t\t<li foo=\"bar\" bar=\"baz\" class=\"bar3\">baz</li>\n\t</ul>\n</div>\n",
+      'result': "%div\n  %p\n  %ul#foo\n    %li.bar1{ :foo => \"bar\", :bar => \"baz\" } baz\n    %li.bar2{ :foo => \"bar\", :bar => \"baz\" } baz\n    %li.bar3{ :foo => \"bar\", :bar => \"baz\" } baz\n",
     },
     {
       'name': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}|haml",
       'query': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}|haml",
-      'type': "haml",
+      'type': "html",
       'result': "%div\n  %p\n  %ul#foo\n    %li.bar1{ :foo => \"bar\", :bar => \"baz\" } baz\n    %li.bar2{ :foo => \"bar\", :bar => \"baz\" } baz\n    %li.bar3{ :foo => \"bar\", :bar => \"baz\" } baz\n",
     },
     {
@@ -514,6 +620,35 @@ finish
       'query': ".content{Hello!}|haml",
       'type': "haml",
       'result': "%div.content Hello!\n",
+    },
+  ],
+},
+{
+  'category': 'slim',
+  'tests': [
+    {
+      'name': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}",
+      'query': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}",
+      'type': "slim",
+      'result': "div\n  p\n  ul id=\"foo\"\n    li foo=\"bar\" bar=\"baz\" class=\"bar1\"\n     | baz\n    li foo=\"bar\" bar=\"baz\" class=\"bar2\"\n     | baz\n    li foo=\"bar\" bar=\"baz\" class=\"bar3\"\n     | baz\n",
+    },
+    {
+      'name': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}|slim",
+      'query': "div>p+ul#foo>li.bar$[foo=bar][bar=baz]*3>{baz}|slim",
+      'type': "html",
+      'result': "div\n  p\n  ul id=\"foo\"\n    li foo=\"bar\" bar=\"baz\" class=\"bar1\"\n     | baz\n    li foo=\"bar\" bar=\"baz\" class=\"bar2\"\n     | baz\n    li foo=\"bar\" bar=\"baz\" class=\"bar3\"\n     | baz\n",
+    },
+    {
+      'name': "a*3|slim",
+      'query': "a*3|slim",
+      'type': "slim",
+      'result': "a href=\"\"\na href=\"\"\na href=\"\"\n",
+    },
+    {
+      'name': ".content{Hello!}|slim",
+      'query': ".content{Hello!}|slim",
+      'type': "slim",
+      'result': "div class=\"content\"\n | Hello!\n",
     },
   ],
 },
