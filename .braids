@@ -69,6 +69,13 @@ bundle/jslint:
   squashed: true
   type: git
   url: https://github.com/hallettj/jslint.vim.git
+bundle/lint.vim: 
+  branch: master
+  remote: master/braid/bundle/lint.vim
+  revision: 0bfa627dd9cbebddc29170c0befee41b81e1d5d4
+  squashed: true
+  type: git
+  url: https://github.com/vim-scripts/lint.vim.git
 bundle/nerdcommenter: 
   branch: master
   remote: master/braid/bundles/nerdcommenter
