@@ -30,7 +30,7 @@ bundle/cucumber:
 bundle/delimitMate: 
   branch: master
   remote: master/braid/bundles/delimitMate
-  revision: 9c1564a22f19867c6ce6781ae72da785795b1e84
+  revision: 0326b7c14a8acb7e4185df1f6033d87bab9ff152
   squashed: true
   type: git
   url: http://github.com/Raimondi/delimitMate.git
@@ -44,7 +44,7 @@ bundle/endwise:
 bundle/fugitive: 
   branch: master
   remote: master/braid/bundles/fugitive
-  revision: 6515bd43acc28c86fcf3bea64ce8a6b3d7db19ff
+  revision: 745ccf50662fc18c11e0c7a397b59e07a5a13141
   squashed: true
   type: git
   url: git://github.com/tpope/vim-fugitive.git
@@ -58,7 +58,7 @@ bundle/gundo.vim:
 bundle/haml: 
   branch: master
   remote: master/braid/bundles/haml
-  revision: 6284c188c23fabc6feb7d177bd8a0d06e6af1e0f
+  revision: 9a891ed78a4b222e8c710e533e0d1f21259c0ef1
   squashed: true
   type: git
   url: git://github.com/tpope/vim-haml.git
@@ -79,14 +79,14 @@ bundle/lint.vim:
 bundle/nerdcommenter: 
   branch: master
   remote: master/braid/bundles/nerdcommenter
-  revision: cb242a9cb41e9fc9884caa2235c67d18b18e9067
+  revision: baa453aad84bbdb999c9d75915886244b98c39f3
   squashed: true
   type: git
   url: git://github.com/scrooloose/nerdcommenter.git
 bundle/nerdtree: 
   branch: master
   remote: master/braid/bundles/nerdtree
-  revision: 2cb0fc78fb4c7a1db5f51c042a447cc50f09983d
+  revision: a1433c485eb254838c1db52e087d5ec4d1e77cfd
   squashed: true
   type: git
   url: git://github.com/scrooloose/nerdtree.git
@@ -100,7 +100,7 @@ bundle/pastie:
 bundle/rails: 
   branch: master
   remote: master/braid/bundles/rails
-  revision: 8412c9b9fef6225696be6c4a97e58a7eb1bbbf1a
+  revision: f546d5cd3983c3d67c8df278f7cbf2e01974cca4
   squashed: true
   type: git
   url: git://github.com/tpope/vim-rails.git
@@ -128,14 +128,14 @@ bundle/space:
 bundle/surround: 
   branch: master
   remote: master/braid/bundles/surround
-  revision: 489a1e8c676ad47dd358dbf883bfaf492148d38b
+  revision: 1a73f607f8f5477d6942df2eb6e7245c4864f4d3
   squashed: true
   type: git
   url: git://github.com/tpope/vim-surround.git
 bundle/syntastic: 
   branch: master
   remote: master/braid/bundle/syntastic
-  revision: ec9bf2e983463445b15e1df20c2d774e9bf7361b
+  revision: 6818c45710b2e889c85ae9ca88ac1c1d2b5d2420
   squashed: true
   type: git
   url: https://github.com/scrooloose/syntastic.git
@@ -149,7 +149,7 @@ bundle/tabular:
 bundle/tagbar: 
   branch: master
   remote: master/braid/bundle/tagbar
-  revision: ee1c4e137e33c64c787df68efcca7e9af4c5f790
+  revision: f1c6d8c7802ec397ae48e48d2deaa3ac84a9c60f
   squashed: true
   type: git
   url: https://github.com/majutsushi/tagbar.git
@@ -177,7 +177,7 @@ bundle/vim-bundler:
 bundle/vim-coffee-script: 
   branch: master
   remote: master/braid/bundles/vim-coffee-script
-  revision: abac188893e615b5cbb7137ada691abd597be975
+  revision: d6dcb9b0fb5beac9e84cfb84c1917b7e0df5850f
   squashed: true
   type: git
   url: http://github.com/kchmck/vim-coffee-script.git
@@ -233,7 +233,7 @@ bundle/vividchalk:
 bundle/zencoding-vim: 
   branch: master
   remote: master/braid/bundle/zencoding-vim
-  revision: 3d3ae065eb4de2a9d6f9541aa2867cfc2dadb813
+  revision: 267b428943f7645ec6567c5298b25791a8b79d7f
   squashed: true
   type: git
   url: git://github.com/mattn/zencoding-vim.git
