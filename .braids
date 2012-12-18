@@ -163,7 +163,7 @@ bundle/threesome:
 bundle/unimpaired: 
   branch: master
   remote: master/braid/bundles/unimpaired
-  revision: e8013727a008a68664a789fe0d2b5c2ab2ecf657
+  revision: 9507b80198acd1dd5da10fb01f69fa735c163800
   squashed: true
   type: git
   url: git://github.com/tpope/vim-unimpaired.git
