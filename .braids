@@ -198,7 +198,7 @@ bundle/vim-makegreen:
 bundle/vim-rake: 
   branch: master
   remote: master/braid/bundle/vim-rake
-  revision: af98f573714d0a3c2bec5ca8003762a32dafa925
+  revision: fd4cadbd944badba8ebf6b324aac367e78059461
   squashed: true
   type: git
   url: https://github.com/tpope/vim-rake.git
