@@ -142,7 +142,7 @@ bundle/syntastic:
 bundle/tabular: 
   branch: master
   remote: master/braid/bundle/tabular
-  revision: ad2a5a1d54443ab27f1282c5617f55b8e0819623
+  revision: 7f6f1723a27fe3948ea7d2bb8465e3bf28f63f56
   squashed: true
   type: git
   url: git://github.com/godlygeek/tabular.git
