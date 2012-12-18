@@ -253,8 +253,8 @@ my_bundle/rtf-highlight:
   url: https://github.com/dharanasoft/rtf-highlight.git
 my_bundle/xterm-color-table.vim: 
   branch: master
-  remote: braid/my-bundle/xterm-color-table.vim
-  revision: 7edaa0262470d6acdf3f0d0491d0117ed31bf51b
+  remote: master/braid/my-bundle/xterm-color-table.vim
+  revision: 0bae0df57db6911611c2350f567b4b6733c4da81
   squashed: true
   type: git
   url: git://github.com/guns/xterm-color-table.vim.git
