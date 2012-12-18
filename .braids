@@ -261,7 +261,7 @@ my_bundle/xterm-color-table.vim:
 vim-pathogen: 
   branch: master
   remote: master/braid/vim-pathogen
-  revision: 09f2c3b7d3666124157de759a68afe47d0bb8d25
+  revision: e5f413f480e0fd4b7c5bce0ff69721a46ca48ab1
   squashed: true
   type: git
   url: git://github.com/tpope/vim-pathogen.git
