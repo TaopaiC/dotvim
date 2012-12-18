@@ -211,8 +211,8 @@ bundle/vim-ruby-refactoring:
   url: https://github.com/ecomba/vim-ruby-refactoring.git
 bundle/vim-textobj-rubyblock: 
   branch: master
-  remote: braid/bundle/vim-textobj-rubyblock
-  revision: c6b186dd5ad74503439c967e0d2ad863fcba93bc
+  remote: master/braid/bundle/vim-textobj-rubyblock
+  revision: 4233958bbfe2975538d589198f74e377fc33bcf3
   squashed: true
   type: git
   url: https://github.com/nelstrom/vim-textobj-rubyblock.git
