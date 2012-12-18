@@ -65,7 +65,7 @@ bundle/haml:
 bundle/jslint: 
   branch: master
   remote: master/braid/bundle/jslint
-  revision: f734edf45ab6dd12425fb10dbab3f0294805c265
+  revision: dab13e19969e6d8c9dc3f3a563baf8528d2f85a6
   squashed: true
   type: git
   url: https://github.com/hallettj/jslint.vim.git
