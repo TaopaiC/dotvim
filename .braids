@@ -191,7 +191,7 @@ bundle/vim-indentobject:
 bundle/vim-makegreen: 
   branch: master
   remote: master/braid/bundle/vim-makegreen
-  revision: eb04971f545a4656c19a5374b748bd6c0bc459a3
+  revision: 430fe94e4f547ea9b9d014f303428e3471b353f9
   squashed: true
   type: git
   url: https://github.com/reinh/vim-makegreen.git

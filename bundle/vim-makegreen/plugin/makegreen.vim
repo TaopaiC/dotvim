@@ -22,14 +22,19 @@ hi RedBar   term=reverse ctermfg=white ctermbg=red guifg=white guibg=red
 
 function MakeGreen(...) "{{{1
   let arg_count = a:0
-  if arg_count
-    let make_args = a:1
+
+  if exists("g:makegreen_stay_on_file") && g:makegreen_stay_on_file
+    let make_command = "make!"
   else
-    let make_args = '%'
+    let make_command = "make"
   endif
 
   silent! w " TODO: configuration option?
-  silent! exec "make " . make_args
+  if arg_count
+    silent! exec make_command . " " . a:1
+  else
+    silent! exec make_command
+  endif
 
   redraw!
 
