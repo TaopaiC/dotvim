@@ -9,9 +9,25 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-function! SyntaxCheckers_ruby_GetLocList()
+function! s:FindRubyExec()
+    if executable("rvm")
+        return system("rvm tools identifier")
+    endif
 
-    let makeprg = 'ruby -w -T1 -c '.shellescape(expand('%'))
+    return "ruby"
+endfunction
+
+if !exists("g:syntastic_ruby_exec")
+    let g:syntastic_ruby_exec = s:FindRubyExec()
+endif
+
+"bail if the user doesnt have ruby installed where they said it is
+if !executable(expand(g:syntastic_ruby_exec))
+    finish
+endif
+
+function! SyntaxCheckers_ruby_GetLocList()
+    let makeprg = expand(g:syntastic_ruby_exec).' -w -T1 -c '.shellescape(expand('%'))
     if !has('win32')
         let makeprg = 'RUBYOPT= ' . makeprg
     endif
@@ -25,6 +41,12 @@ function! SyntaxCheckers_ruby_GetLocList()
     "the word "possibly" in the warning
     let errorformat = '%-G%.%#warning: %\(possibly %\)%\?useless use of == in void context'
 
-    let errorformat .=  ',%-GSyntax OK,%E%f:%l: syntax error\, %m,%Z%p^,%W%f:%l: warning: %m,%Z%p^,%W%f:%l: %m,%-C%.%#'
+    " filter out lines starting with ...
+    " long lines are truncated and wrapped in ... %p then returns the wrong
+    " column offset
+    let errorformat .= ',%-G%\%.%\%.%\%.%.%#'
+
+    let errorformat .= ',%-GSyntax OK,%E%f:%l: syntax error\, %m'
+    let errorformat .= ',%Z%p^,%W%f:%l: warning: %m,%Z%p^,%W%f:%l: %m,%-C%.%#'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 endfunction
