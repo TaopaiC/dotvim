@@ -162,6 +162,8 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'mtscout6/vim-cjsx'
 NeoBundle 'mustache/vim-mustache-handlebars'
 NeoBundle 'othree/yajs.vim'
+NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'Lokaltog/vim-easymotion'
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
