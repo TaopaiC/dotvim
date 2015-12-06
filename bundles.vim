@@ -160,10 +160,30 @@ NeoBundle 'Shougo/unite-outline'
 NeoBundle 'ujihisa/unite-colorscheme'
 
 NeoBundle 'mtscout6/vim-cjsx'
+NeoBundle 'mxw/vim-jsx'
 NeoBundle 'mustache/vim-mustache-handlebars'
 NeoBundle 'othree/yajs.vim'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'rizzatti/dash.vim'
+NeoBundle 'Xuyuanp/nerdtree-git-plugin'
+NeoBundle 'Quramy/vison'
+NeoBundle 'chrisbra/vim-diff-enhanced'
+NeoBundle 'junegunn/vim-easy-align'
+" NeoBundle 'marijnh/tern_for_vim', {
+"      \   'build' : {
+"      \     'others': 'npm install'
+"      \   }
+"      \ }
+" NeoBundle 'Valloric/YouCompleteMe', {
+"      \ 'build'      : {
+"         \ 'mac'     : 'git submodule update --init --recursive && ./install.sh',
+"         \ 'unix'    : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+"         \ 'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+"         \ 'cygwin'  : './install.sh --clang-completer --system-libclang --omnisharp-completer'
+"         \ }
+"      \ }
+"NeoBundle 'Shougo/neocomplete.vim'
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
