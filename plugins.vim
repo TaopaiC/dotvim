@@ -164,3 +164,9 @@ map <Leader>r :call RunNearestSpec()<CR>
 let g:airline_powerline_fonts=1
 let g:airline_theme='light' " dark simple badwolf solarized solarized2
 set noshowmode
+
+" junegunn/vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
