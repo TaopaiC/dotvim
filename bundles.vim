@@ -159,6 +159,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'ujihisa/unite-colorscheme'
 
+NeoBundle 'saltstack/salt-vim'
 NeoBundle 'othree/yajs.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'rizzatti/dash.vim'
