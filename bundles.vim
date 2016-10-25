@@ -1,192 +1,187 @@
-set nocompatible
-filetype off
-
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+"dein Scripts-----------------------------
+if &compatible
+  set nocompatible               " Be iMproved
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+" Required:
+set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
 
+" Required:
+call dein#begin('~/.vim/bundle')
+
+" Let dein manage dein
+" Required:
 " plugin management
-NeoBundleFetch 'Shougo/neobundle.vim'
+call dein#add('Shougo/dein.vim')
 
 " file tree
-NeoBundle 'scrooloose/nerdtree'
+call dein#add('scrooloose/nerdtree')
 " file tree and tabs interaction
-NeoBundle 'jistr/vim-nerdtree-tabs'
+call dein#add('jistr/vim-nerdtree-tabs')
 " commenting
-NeoBundle 'scrooloose/nerdcommenter'
+call dein#add('scrooloose/nerdcommenter')
 " fuzzy file open
-NeoBundle 'kien/ctrlp.vim'
+call dein#add('kien/ctrlp.vim')
 " popup completion menu
-NeoBundle 'AutoComplPop'
+call dein#add('AutoComplPop')
 " tags list navigation
-NeoBundle 'taglist.vim'
+call dein#add('taglist.vim')
 " yank history
-NeoBundle 'YankRing.vim'
+call dein#add('YankRing.vim')
 " git integration
-NeoBundle 'tpope/vim-fugitive'
+call dein#add('tpope/vim-fugitive')
 " syntax checking on save
-NeoBundle 'scrooloose/syntastic'
+call dein#add('scrooloose/syntastic')
 " TextMate-style snippets
-NeoBundle 'msanders/snipmate.vim'
+call dein#add('msanders/snipmate.vim')
 " manipulation of surraunding parens, quotes, etc.
-NeoBundle 'tpope/vim-surround'
+call dein#add('tpope/vim-surround')
 " vertical alignment tool
-NeoBundle 'tsaleh/vim-align'
+call dein#add('tsaleh/vim-align')
 " 'ag' searching integration
-NeoBundle 'rking/ag.vim'
+call dein#add('rking/ag.vim')
 " text object based on indent level (ai, ii)
-NeoBundle 'austintaylor/vim-indentobject'
+call dein#add('austintaylor/vim-indentobject')
 " global search & replace
-NeoBundle 'greplace.vim'
+call dein#add('greplace.vim')
 " better looking statusline
-NeoBundle 'bling/vim-airline'
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
 " plugin for resolving three-way merge conflicts
-NeoBundle 'sjl/splice.vim'
+call dein#add('sjl/splice.vim')
 " plugin for visually displaying indent levels
-NeoBundle 'Indent-Guides'
+call dein#add('Indent-Guides')
 " end certain structures automatically, e.g. begin/end etc.
-NeoBundle 'tpope/vim-endwise'
+call dein#add('tpope/vim-endwise')
 " automatic closing of quotes, parenthesis, brackets, etc.
-NeoBundle 'Raimondi/delimitMate'
+call dein#add('Raimondi/delimitMate')
 " calendar, duh!
-NeoBundle 'calendar.vim--Matsumoto'
+call dein#add('calendar.vim--Matsumoto')
 " A Narrow Region Plugin (similar to Emacs)
-"NeoBundle 'chrisbra/NrrwRgn'
+"call dein#add('chrisbra/NrrwRgn')
 " url based hyperlinks for text files
-NeoBundle 'utl.vim'
+call dein#add('utl.vim')
 " A clone of Emacs' Org-mode for Vim
-NeoBundle 'hsitz/VimOrganizer'
+call dein#add('hsitz/VimOrganizer')
 " visual undo tree
-NeoBundle 'sjl/gundo.vim'
+call dein#add('sjl/gundo.vim')
 " switch segments of text with predefined replacements. e.g. '' -> ""
-NeoBundle 'AndrewRadev/switch.vim'
+call dein#add('AndrewRadev/switch.vim')
 " async external commands with output in vim
-NeoBundle 'tpope/vim-dispatch'
+call dein#add('tpope/vim-dispatch')
 " git diff in the gutter (sign column) and stages/reverts hunks
-NeoBundle 'airblade/vim-gitgutter'
+call dein#add('airblade/vim-gitgutter')
 " hi-speed html coding
-NeoBundle 'mattn/emmet-vim'
+call dein#add('mattn/emmet-vim')
 " editorconfig.org support
-NeoBundle 'editorconfig/editorconfig-vim'
+call dein#add('editorconfig/editorconfig-vim')
 
 " Ruby/Rails
 
 " rails support
-NeoBundle 'tpope/vim-rails'
+call dein#add('tpope/vim-rails')
 " bundler integration (e.g. :Bopen)
-NeoBundle 'tpope/vim-bundler'
+call dein#add('tpope/vim-bundler')
 " rake integration
-NeoBundle 'tpope/vim-rake'
+call dein#add('tpope/vim-rake')
 " A custom text object for selecting ruby blocks (ar/ir)
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
+call dein#add('nelstrom/vim-textobj-rubyblock')
 " ruby refactoring
-NeoBundle 'ecomba/vim-ruby-refactoring'
+call dein#add('ecomba/vim-ruby-refactoring')
 " apidock.com docs integration
-NeoBundle 'apidock.vim'
+call dein#add('apidock.vim')
 " toggle ruby blocks style
-NeoBundle 'vim-scripts/blockle.vim'
+call dein#add('vim-scripts/blockle.vim')
 " lightweight Rspec runner for Vim
-NeoBundle 'josemarluedke/vim-rspec'
+call dein#add('josemarluedke/vim-rspec')
 " i18n extraction plugin
-NeoBundle 'stefanoverna/vim-i18n'
+call dein#add('stefanoverna/vim-i18n')
 
 " color themes
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'tpope/vim-vividchalk'
-NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+call dein#add('altercation/vim-colors-solarized')
+call dein#add('tpope/vim-vividchalk')
+call dein#add('chriskempson/tomorrow-theme', {'rtp' : 'vim/'})
 
 " syntax support
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tsaleh/vim-tmux'
-NeoBundle 'Puppet-Syntax-Highlighting'
-NeoBundle 'JSON.vim'
-NeoBundle 'tpope/vim-cucumber'
-NeoBundle 'tpope/vim-haml'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'vitaly/vim-syntastic-coffee'
-NeoBundle 'vim-scripts/jade.vim'
-NeoBundle 'wavded/vim-stylus'
-NeoBundle 'slim-template/vim-slim'
-NeoBundle 'elixir-lang/vim-elixir'
-NeoBundle 'Blackrush/vim-gocode'
-NeoBundle 'ekalinin/Dockerfile.vim'
-NeoBundle 'groenewege/vim-less'
-NeoBundle 'mustache/vim-mustache-handlebars'
-NeoBundle 'mtscout6/vim-cjsx'
-NeoBundle 'vitaly/vim-literate-coffeescript'
-NeoBundle 'rust-lang/rust', {'rtp': 'src/etc/vim/'}
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'mxw/vim-jsx'
+call dein#add('vim-ruby/vim-ruby')
+call dein#add('tsaleh/vim-tmux')
+call dein#add('Puppet-Syntax-Highlighting')
+call dein#add('JSON.vim')
+call dein#add('tpope/vim-cucumber')
+call dein#add('tpope/vim-haml')
+call dein#add('tpope/vim-markdown')
+call dein#add('kchmck/vim-coffee-script')
+call dein#add('vitaly/vim-syntastic-coffee')
+call dein#add('vim-scripts/jade.vim')
+call dein#add('wavded/vim-stylus')
+call dein#add('slim-template/vim-slim')
+call dein#add('elixir-lang/vim-elixir')
+call dein#add('Blackrush/vim-gocode')
+call dein#add('ekalinin/Dockerfile.vim')
+call dein#add('groenewege/vim-less')
+call dein#add('mustache/vim-mustache-handlebars')
+call dein#add('mtscout6/vim-cjsx')
+call dein#add('vitaly/vim-literate-coffeescript')
+" call dein#add('rust-lang/rust', {'rtp' : 'src/etc/vim/'})
+call dein#add('pangloss/vim-javascript')
+call dein#add('mxw/vim-jsx')
 
 " clojure
-"NeoBundle 'VimClojure'
-NeoBundle 'guns/vim-clojure-static'
-NeoBundle 'tpope/vim-fireplace'
-NeoBundle 'kien/rainbow_parentheses.vim'
+"call dein#add('VimClojure')
+call dein#add('guns/vim-clojure-static')
+call dein#add('tpope/vim-fireplace')
+call dein#add('kien/rainbow_parentheses.vim')
 
 " Support and minor
 
 " Support for user-defined text objects
-NeoBundle 'kana/vim-textobj-user'
+call dein#add('kana/vim-textobj-user')
 " replacement for the repeat mapping (.) to support plugins
-NeoBundle 'tpope/vim-repeat'
+call dein#add('tpope/vim-repeat')
 " hide .gitignore-d files from vim
-NeoBundle 'vitaly/vim-gitignore'
+call dein#add('vitaly/vim-gitignore')
 " repeat motion with <Space>
-NeoBundle 'scrooloose/vim-space'
+call dein#add('scrooloose/vim-space')
 " Github's gist support
-NeoBundle 'mattn/gist-vim'
+call dein#add('mattn/gist-vim')
 " web APIs support
-NeoBundle 'mattn/webapi-vim'
+call dein#add('mattn/webapi-vim')
 
-"NeoBundle 'ShowMarks'
-"NeoBundle 'tpope/vim-unimpaired'
-"NeoBundle 'reinh/vim-makegreen'
+"call dein#add('ShowMarks')
+"call dein#add('tpope/vim-unimpaired')
+"call dein#add('reinh/vim-makegreen')
 
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'ujihisa/unite-colorscheme'
+call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/unite-outline')
+call dein#add('ujihisa/unite-colorscheme')
 
-NeoBundle 'saltstack/salt-vim'
-NeoBundle 'othree/yajs.vim'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'rizzatti/dash.vim'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'Quramy/vison'
-NeoBundle 'chrisbra/vim-diff-enhanced'
-NeoBundle 'junegunn/vim-easy-align'
-" NeoBundle 'marijnh/tern_for_vim', {
-"      \   'build' : {
-"      \     'others': 'npm install'
-"      \   }
-"      \ }
-" NeoBundle 'Valloric/YouCompleteMe', {
-"      \ 'build'      : {
-"         \ 'mac'     : 'git submodule update --init --recursive && ./install.sh',
-"         \ 'unix'    : './install.sh --clang-completer --system-libclang --omnisharp-completer',
-"         \ 'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
-"         \ 'cygwin'  : './install.sh --clang-completer --system-libclang --omnisharp-completer'
-"         \ }
-"      \ }
-"NeoBundle 'Shougo/neocomplete.vim'
+call dein#add('saltstack/salt-vim')
+call dein#add('othree/yajs.vim')
+call dein#add('Lokaltog/vim-easymotion')
+call dein#add('rizzatti/dash.vim')
+call dein#add('Xuyuanp/nerdtree-git-plugin')
+call dein#add('Quramy/vison')
+call dein#add('chrisbra/vim-diff-enhanced')
+call dein#add('junegunn/vim-easy-align')
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
 
-call neobundle#end()
+" Required:
+call dein#end()
 
+" Required:
 filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+"End dein Scripts-------------------------
+
+
 

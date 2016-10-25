@@ -10,39 +10,37 @@ delete:
 	@read something
 	rm -rf bundle
 
-NEOBUNDLE := bundle/neobundle.vim
-${NEOBUNDLE}:
+PLUGIN_DIR=./bundle
+INSTALL_DIR=$(PLUGIN_DIR)/repos/github.com/Shougo/dein.vim
+DEIN := bundle/repos/github.com/Shougo/dein.vim
+${DEIN}:
 	@echo 
 	@echo
 	@echo '**************************************************************'
-	@echo '*    UPGRADING vundle => neobundle                           *'
+	@echo '*    UPGRADING vundle => dein                                *'
 	@echo '*                                                            *'
 	@echo '*    Your existing vundle repository will be DELETED!!!!     *'
 	@echo '*    press ENTER to continue, Ctrl-C to stop                 *'
 	@echo '**************************************************************'
 	@read a
 	rm -rf bundle/vundle
-	mkdir -p bundle && cd bundle && git clone https://github.com/Shougo/neobundle.vim.git
+	@PLUGIN_DIR=./bundle
+	@INSTALL_DIR="$(PLUGIN_DIR)/repos/github.com/Shougo/dein.vim"
+	@echo "Install to \"$(INSTALL_DIR)\"..."
+	mkdir -p $(INSTALL_DIR) && git clone https://github.com/Shougo/dein.vim $(INSTALL_DIR)
 	@echo
 	@echo '**************************************************************************'
 	@echo '*   DONE! You might need to upgrade your bundles.vim to the new format.  *'
-	@echo '*   see https://github.com/Shougo/neobundle.vim                          *'
+	@echo '*   see https://github.com/Shougo/dein.vim                               *'
 	@echo '**************************************************************************'
 	@echo
 
-.PHONY: cleanup compile-command-t compile
-
 cleanup:
-	vim -u bundles.vim +NeoBundleClean +NeoBundleCheck +NeoBundleDocs
-
-compile-command-t:
-	test ! -d bundle/Command-T || (cd bundle/Command-T/ruby/command-t/ && $(RUBY) extconf.rb && make)
-
-compile: compile-command-t
+	vim -u bundles.vim '+call dein#install()'
 
 .PHONY: install reinstall
 
-install: ${NEOBUNDLE} cleanup compile
+install: ${DEIN} cleanup compile
 
 reinstall: delete install
 
@@ -55,13 +53,10 @@ edit: edit-bundles install
 
 .PHONY: cleanup-bundles update-bundles update
 
-cleanup-bundles:
-	ls bundle | while read b;do (cd bundle/$$b && git clean -f);done
+update-bundles: ${DEIN}
+	vim -u bundles.vim 'if dein#check_install() +call dein#update()'
 
-update-bundles: ${NEOBUNDLE}
-	vim -u bundles.vim +NeoBundleUpdate
-
-update: cleanup-bundles update-bundles install
+update: update-bundles
 
 .PHONY: help
 
