@@ -166,6 +166,8 @@ call dein#add('chrisbra/vim-diff-enhanced')
 call dein#add('junegunn/vim-easy-align')
 call dein#add('joshdick/onedark.vim')
 call dein#add('chrisbra/Colorizer')
+call dein#add('haya14busa/incsearch.vim')
+call dein#add('haya14busa/incsearch-fuzzy.vim')
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
