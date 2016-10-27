@@ -158,7 +158,7 @@ call dein#add('ujihisa/unite-colorscheme')
 
 call dein#add('saltstack/salt-vim')
 call dein#add('othree/yajs.vim')
-call dein#add('Lokaltog/vim-easymotion')
+call dein#add('easymotion/vim-easymotion')
 call dein#add('rizzatti/dash.vim')
 call dein#add('Xuyuanp/nerdtree-git-plugin')
 call dein#add('Quramy/vison')

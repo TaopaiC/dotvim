@@ -61,7 +61,7 @@ let g:yankring_history_dir = '~/.backup'
 "nmap <unique> <silent> <Leader>. :CommandTFlush<CR>:CommandT<CR>
 "let g:CommandTMatchWindowAtTop=1
 
-let g:ctrlp_map = '<leader>,'
+" let g:ctrlp_map = '<leader>,'
 let g:ctrlp_cmd = 'CtrlP'
 
 nmap <leader>. :CtrlPClearCache<cr>:CtrlP<cr>
@@ -179,4 +179,22 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 
 " Colorizer
 let g:colorizer_auto_filetype='css,html,scss,js,jsx'
+
+" javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
+
+" Easy Motion
+" <Leader>f{char} to move to {char}
+map  <Leader><Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader><Leader>f <Plug>(easymotion-overwin-f)
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+" Move to line
+map  <Leader><Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader><Leader>L <Plug>(easymotion-overwin-line)
+" Move to word
+map  <Leader><Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
+
 
