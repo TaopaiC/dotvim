@@ -163,7 +163,7 @@ map <Leader>r :call RunNearestSpec()<CR>
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts=1
-let g:airline_theme='solarized' " dark simple badwolf solarized solarized2
+let g:airline_theme='onedark' " dark simple badwolf solarized solarized2
 set noshowmode
 
 " junegunn/vim-easy-align
