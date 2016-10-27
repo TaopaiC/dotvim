@@ -170,6 +170,7 @@ call dein#add('haya14busa/incsearch.vim')
 call dein#add('haya14busa/incsearch-fuzzy.vim')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('carlitux/deoplete-ternjs', {'build': 'npm install -g tern'})
+call dein#add('wellle/tmux-complete.vim')
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
