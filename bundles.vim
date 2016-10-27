@@ -23,7 +23,7 @@ call dein#add('scrooloose/nerdcommenter')
 " fuzzy file open
 call dein#add('kien/ctrlp.vim')
 " popup completion menu
-call dein#add('AutoComplPop')
+" call dein#add('AutoComplPop')
 " tags list navigation
 call dein#add('taglist.vim')
 " yank history
@@ -168,6 +168,8 @@ call dein#add('joshdick/onedark.vim')
 call dein#add('chrisbra/Colorizer')
 call dein#add('haya14busa/incsearch.vim')
 call dein#add('haya14busa/incsearch-fuzzy.vim')
+call dein#add('Shougo/deoplete.nvim')
+call dein#add('carlitux/deoplete-ternjs', {'build': 'npm install -g tern'})
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles

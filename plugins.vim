@@ -217,6 +217,7 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
-
+" deoplete.
+let g:deoplete#enable_at_startup = 1
 
 
