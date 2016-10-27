@@ -177,3 +177,6 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=237
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
 
+" Colorizer
+let g:colorizer_auto_filetype='css,html,scss,js,jsx'
+

@@ -165,6 +165,7 @@ call dein#add('Quramy/vison')
 call dein#add('chrisbra/vim-diff-enhanced')
 call dein#add('junegunn/vim-easy-align')
 call dein#add('joshdick/onedark.vim')
+call dein#add('chrisbra/Colorizer')
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
