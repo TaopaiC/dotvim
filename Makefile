@@ -10,37 +10,33 @@ delete:
 	@read something
 	rm -rf bundle
 
-PLUGIN_DIR=./bundle
-INSTALL_DIR=$(PLUGIN_DIR)/repos/github.com/Shougo/dein.vim
-DEIN := bundle/repos/github.com/Shougo/dein.vim
-${DEIN}:
+PLUG := autoload/plug.vim
+${PLUG}:
 	@echo 
 	@echo
 	@echo '**************************************************************'
-	@echo '*    UPGRADING vundle => dein                                *'
+	@echo '*    UPGRADING vundle => Plug                                *'
 	@echo '*                                                            *'
 	@echo '*    Your existing vundle repository will be DELETED!!!!     *'
 	@echo '*    press ENTER to continue, Ctrl-C to stop                 *'
 	@echo '**************************************************************'
 	@read a
 	rm -rf bundle/vundle
-	@PLUGIN_DIR=./bundle
-	@INSTALL_DIR="$(PLUGIN_DIR)/repos/github.com/Shougo/dein.vim"
 	@echo "Install to \"$(INSTALL_DIR)\"..."
-	mkdir -p $(INSTALL_DIR) && git clone https://github.com/Shougo/dein.vim $(INSTALL_DIR)
+	curl -fLo autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	@echo
 	@echo '**************************************************************************'
 	@echo '*   DONE! You might need to upgrade your bundles.vim to the new format.  *'
-	@echo '*   see https://github.com/Shougo/dein.vim                               *'
+	@echo '*   see https://github.com/junegunn/vim-plug                             *'
 	@echo '**************************************************************************'
 	@echo
 
 cleanup:
-	vim -u bundles.vim '+call dein#install()'
+	vim -u bundles.vim '+PlugInstall'
 
 .PHONY: install reinstall
 
-install: ${DEIN} cleanup compile
+install: ${PLUG} cleanup compile
 
 reinstall: delete install
 
@@ -53,8 +49,8 @@ edit: edit-bundles install
 
 .PHONY: cleanup-bundles update-bundles update
 
-update-bundles: ${DEIN}
-	vim -u bundles.vim 'if dein#check_install() +call dein#update()'
+update-bundles: ${PLUG}
+	vim -u bundles.vim '+PlugUpdate'
 
 update: update-bundles
 

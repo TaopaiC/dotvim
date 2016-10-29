@@ -2,3 +2,4 @@ sessions
 .netrwhist
 spell
 bundle/
+autoload/plug.vim
