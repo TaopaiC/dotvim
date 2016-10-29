@@ -14,7 +14,6 @@ end
 let g:fml_all_sources = 1 " vim-follow-my-lead
 let g:airline#extensions#tabline#enabled = 1  " using buffers
 let g:airline#extensions#tabline#fnamemod = ':t'
-" let g:jsx_ext_required = 0 " mxw/vim-jsx: Allow JSX in normal JS files
 
 source ~/.vim/before.vim   " local BEFORE configs
 

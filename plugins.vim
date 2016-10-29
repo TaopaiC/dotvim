@@ -183,6 +183,8 @@ let g:colorizer_auto_filetype='css,html,scss,js,jsx'
 " javascript
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
+" jsx
+let g:jsx_ext_required = 0
 
 " Easy Motion
 " <Leader>f{char} to move to {char}
