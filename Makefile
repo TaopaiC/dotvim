@@ -32,11 +32,11 @@ ${PLUG}:
 	@echo
 
 cleanup:
-	vim -u bundles.vim '+PlugInstall'
+	vim -u bundles.vim +PlugClean +PlugInstall
 
 .PHONY: install reinstall
 
-install: ${PLUG} cleanup compile
+install: ${PLUG} cleanup
 
 reinstall: delete install
 
@@ -47,10 +47,8 @@ edit-bundles:
 
 edit: edit-bundles install
 
-.PHONY: cleanup-bundles update-bundles update
-
 update-bundles: ${PLUG}
-	vim -u bundles.vim '+PlugUpdate'
+	vim -u bundles.vim +PlugUpgrade +PlugClean +PlugUpdate
 
 update: update-bundles
 
