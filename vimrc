@@ -15,6 +15,10 @@ let g:fml_all_sources = 1 " vim-follow-my-lead
 let g:airline#extensions#tabline#enabled = 1  " using buffers
 let g:airline#extensions#tabline#fnamemod = ':t'
 
+" set autochdir
+autocmd InsertEnter * let save_cwd = getcwd() | execute 'lcd %:p:h'
+autocmd InsertLeave * execute 'lcd' fnameescape(save_cwd)
+
 source ~/.vim/before.vim   " local BEFORE configs
 
 " after.vim is loaded from ./after/plugin/after.vim
