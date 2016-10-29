@@ -7,17 +7,17 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " file tree
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeTabsToggle'] }
 " file tree and tabs interaction
-Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jistr/vim-nerdtree-tabs', { 'on': ['NERDTreeTabsToggle', 'NERDTreeTabsOpen'] }
 " commenting
 Plug 'scrooloose/nerdcommenter'
 " fuzzy file open
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " popup completion menu
 " Plug 'AutoComplPop'
 " tags list navigation
-Plug 'taglist.vim'
+Plug 'taglist.vim', { 'on': ['TlistToggle', 'TlistOpen'] }
 " yank history
 Plug 'YankRing.vim'
 " git integration
@@ -31,7 +31,7 @@ Plug 'tpope/vim-surround'
 " vertical alignment tool
 Plug 'tsaleh/vim-align'
 " 'ag' searching integration
-Plug 'rking/ag.vim'
+Plug 'rking/ag.vim', { 'on': ['Ag'] }
 " text object based on indent level (ai, ii)
 Plug 'austintaylor/vim-indentobject'
 " global search & replace
@@ -48,7 +48,7 @@ Plug 'tpope/vim-endwise'
 " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'Raimondi/delimitMate'
 " calendar, duh!
-Plug 'calendar.vim--Matsumoto'
+Plug 'calendar.vim--Matsumoto', { 'on': ['Calendar', 'CalendarH'] }
 " A Narrow Region Plugin (similar to Emacs)
 "Plug 'chrisbra/NrrwRgn'
 " url based hyperlinks for text files
@@ -56,7 +56,7 @@ Plug 'utl.vim'
 " A clone of Emacs' Org-mode for Vim
 Plug 'hsitz/VimOrganizer'
 " visual undo tree
-Plug 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim', { 'on': ['GundoToggle', 'GundoShow'] }
 " switch segments of text with predefined replacements. e.g. '' -> ""
 Plug 'AndrewRadev/switch.vim'
 " async external commands with output in vim
@@ -71,21 +71,21 @@ Plug 'editorconfig/editorconfig-vim'
 " Ruby/Rails
 
 " rails support
-Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rails', { 'for': ['ruby', 'erb'] }
 " bundler integration (e.g. :Bopen)
-Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-bundler', { 'for': ['ruby', 'erb'] }
 " rake integration
-Plug 'tpope/vim-rake'
+Plug 'tpope/vim-rake', { 'for': ['ruby', 'erb'] }
 " A custom text object for selecting ruby blocks (ar/ir)
-Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby', 'erb'] }
 " ruby refactoring
-Plug 'ecomba/vim-ruby-refactoring'
+Plug 'ecomba/vim-ruby-refactoring', { 'for': ['ruby', 'erb'] }
 " apidock.com docs integration
-Plug 'apidock.vim'
+Plug 'apidock.vim', { 'for': ['ruby', 'erb'] }
 " toggle ruby blocks style
-Plug 'vim-scripts/blockle.vim'
+Plug 'vim-scripts/blockle.vim', { 'for': ['ruby', 'erb'] }
 " lightweight Rspec runner for Vim
-Plug 'josemarluedke/vim-rspec'
+Plug 'josemarluedke/vim-rspec', { 'for': ['ruby', 'erb'] }
 " i18n extraction plugin
 Plug 'stefanoverna/vim-i18n'
 
@@ -133,7 +133,7 @@ Plug 'tpope/vim-repeat'
 " hide .gitignore-d files from vim
 Plug 'vitaly/vim-gitignore'
 " repeat motion with <Space>
-Plug 'scrooloose/vim-space'
+Plug 'spiiph/vim-space'
 " Github's gist support
 Plug 'mattn/gist-vim'
 " web APIs support
