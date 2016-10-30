@@ -25,7 +25,9 @@ Plug 'tpope/vim-fugitive'
 " syntax checking on save
 Plug 'scrooloose/syntastic'
 " TextMate-style snippets
-Plug 'msanders/snipmate.vim'
+" Plug 'MarcWeber/vim-addon-mw-utils' | Plug 'tomtom/tlib_vim' | Plug 'garbas/vim-snipmate' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
 " manipulation of surraunding parens, quotes, etc.
 Plug 'tpope/vim-surround'
 " vertical alignment tool

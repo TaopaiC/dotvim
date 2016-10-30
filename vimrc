@@ -19,6 +19,16 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 autocmd InsertEnter * let save_cwd = getcwd() | execute 'lcd %:p:h'
 autocmd InsertLeave * execute 'lcd' fnameescape(save_cwd)
 
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsSnippetsDir="~/repo/UltiSnips"
+let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+" autocmd CompleteDone * pclose!
+call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+
 source ~/.vim/before.vim   " local BEFORE configs
 
 " after.vim is loaded from ./after/plugin/after.vim
