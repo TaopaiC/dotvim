@@ -22,8 +22,8 @@ Plug 'taglist.vim', { 'on': ['TlistToggle', 'TlistOpen'] }
 Plug 'YankRing.vim'
 " git integration
 Plug 'tpope/vim-fugitive'
-" syntax checking on save
-Plug 'scrooloose/syntastic'
+" Asynchronous Lint Engine 
+Plug 'w0rp/ale'
 " TextMate-style snippets
 " Plug 'MarcWeber/vim-addon-mw-utils' | Plug 'tomtom/tlib_vim' | Plug 'garbas/vim-snipmate' | Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
