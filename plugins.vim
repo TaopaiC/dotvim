@@ -232,5 +232,6 @@ let g:UltiSnipsEditSplit="vertical"
 " let g:UltiSnipsSnippetsDir="~/repo/UltiSnips"
 let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 
-
+" fml
+let g:fml_all_sources=1
 

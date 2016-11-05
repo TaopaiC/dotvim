@@ -163,6 +163,7 @@ Plug 'carlitux/deoplete-ternjs', {'do': 'npm install -g tern tern-jsx'}
 Plug 'wellle/tmux-complete.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'othree/html5.vim'
+Plug 'ktonga/vim-follow-my-lead'
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
