@@ -1,8 +1,4 @@
 " Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-
 " Required:
 call plug#begin('~/.vim/bundle')
 
@@ -175,11 +171,4 @@ endif
 " Required:
 call plug#end()
 
-" Required:
-filetype plugin indent on
-syntax enable
-
 "End Scripts-------------------------
-
-
-

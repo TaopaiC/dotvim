@@ -161,7 +161,8 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 map <Leader>r :call RunNearestSpec()<CR>
 
 " vim-airline
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1  " using buffers
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts=1
 let g:airline_theme='onedark' " dark simple badwolf solarized solarized2
 set noshowmode
@@ -221,4 +222,15 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 
 " deoplete.
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 set completeopt+=noinsert
+call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+
+" UltiSnips
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsSnippetsDir="~/repo/UltiSnips"
+let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+
+
+
