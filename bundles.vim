@@ -96,7 +96,7 @@ Plug 'chriskempson/tomorrow-theme', {'rtp' : 'vim/'}
 Plug 'vim-ruby/vim-ruby'
 Plug 'tsaleh/vim-tmux'
 Plug 'Puppet-Syntax-Highlighting'
-Plug 'JSON.vim'
+Plug 'elzr/vim-json'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-markdown'
@@ -159,11 +159,13 @@ Plug 'chrisbra/Colorizer'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'Shougo/deoplete.nvim'
-Plug 'carlitux/deoplete-ternjs', {'do': 'npm install -g tern tern-jsx'}
+Plug 'carlitux/deoplete-ternjs', {'do': 'yarn global add tern tern-jsx'}
 Plug 'wellle/tmux-complete.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'othree/html5.vim'
 Plug 'ktonga/vim-follow-my-lead'
+Plug 'sbdchd/neoformat'
+Plug 'flowtype/vim-flow', {'for': 'javascript', 'do': 'yarn global add flow-bin'}
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
