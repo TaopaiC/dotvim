@@ -13,9 +13,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 " popup completion menu
 " Plug 'AutoComplPop'
 " tags list navigation
-Plug 'taglist.vim', { 'on': ['TlistToggle', 'TlistOpen'] }
+Plug 'vim-scripts/taglist.vim', { 'on': ['TlistToggle', 'TlistOpen'] }
 " yank history
-Plug 'YankRing.vim'
+Plug 'vim-scripts/YankRing.vim'
 " git integration
 Plug 'tpope/vim-fugitive'
 " Asynchronous Lint Engine 
@@ -33,24 +33,24 @@ Plug 'rking/ag.vim', { 'on': ['Ag'] }
 " text object based on indent level (ai, ii)
 Plug 'austintaylor/vim-indentobject'
 " global search & replace
-Plug 'greplace.vim'
+Plug 'vim-scripts/greplace.vim'
 " better looking statusline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " plugin for resolving three-way merge conflicts
 Plug 'sjl/splice.vim'
 " plugin for visually displaying indent levels
-Plug 'Indent-Guides'
+Plug 'vim-scripts/Indent-Guides'
 " end certain structures automatically, e.g. begin/end etc.
 Plug 'tpope/vim-endwise'
 " automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'Raimondi/delimitMate'
 " calendar, duh!
-Plug 'calendar.vim--Matsumoto', { 'on': ['Calendar', 'CalendarH'] }
+Plug 'vim-scripts/calendar.vim--Matsumoto', { 'on': ['Calendar', 'CalendarH'] }
 " A Narrow Region Plugin (similar to Emacs)
 "Plug 'chrisbra/NrrwRgn'
 " url based hyperlinks for text files
-Plug 'utl.vim'
+Plug 'vim-scripts/utl.vim'
 " A clone of Emacs' Org-mode for Vim
 Plug 'hsitz/VimOrganizer'
 " visual undo tree
@@ -79,7 +79,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby', 'erb'] }
 " ruby refactoring
 Plug 'ecomba/vim-ruby-refactoring', { 'for': ['ruby', 'erb'] }
 " apidock.com docs integration
-Plug 'apidock.vim', { 'for': ['ruby', 'erb'] }
+Plug 'vim-scripts/apidock.vim', { 'for': ['ruby', 'erb'] }
 " toggle ruby blocks style
 Plug 'vim-scripts/blockle.vim', { 'for': ['ruby', 'erb'] }
 " lightweight Rspec runner for Vim
@@ -95,8 +95,8 @@ Plug 'chriskempson/tomorrow-theme', {'rtp' : 'vim/'}
 " syntax support
 Plug 'vim-ruby/vim-ruby'
 Plug 'tsaleh/vim-tmux'
-Plug 'Puppet-Syntax-Highlighting'
-Plug 'elzr/vim-json'
+Plug 'vim-scripts/Puppet-Syntax-Highlighting'
+Plug 'vim-scripts/JSON.vim'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-markdown'
@@ -165,7 +165,16 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'othree/html5.vim'
 Plug 'ktonga/vim-follow-my-lead'
 Plug 'sbdchd/neoformat'
-Plug 'flowtype/vim-flow', {'for': 'javascript', 'do': 'yarn global add flow-bin'}
+Plug 'majutsushi/tagbar'
+" Allow opening a file in a given line
+Plug 'bogado/file-line'
+" Underlines word under cursor
+Plug 'itchyny/vim-cursorword'
+" Print objects’ documentation in echo area
+Plug 'Shougo/echodoc.vim'
+" Scala
+Plug 'derekwyatt/vim-scala'
+
 
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles

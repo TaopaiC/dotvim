@@ -224,7 +224,7 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 set completeopt+=noinsert
-call deoplete#custom#set('_', 'matchers', ['matcher_fuzzy'])
+call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
 
 " UltiSnips
 " If you want :UltiSnipsEdit to split your window.
@@ -235,3 +235,7 @@ let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
 " fml
 let g:fml_all_sources=1
 
+
+let g:tagbar_type_javascript = {
+  \ 'ctagsbin': 'jsctags'
+\ }

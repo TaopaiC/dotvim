@@ -15,6 +15,8 @@
   endif
 " endif
 
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 " content of this file is loaded BEFORE all the plugins
 source ~/.vim/bundles.vim  " vundle plugins list
 source ~/.vim/global.vim   " general global configuration
