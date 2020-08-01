@@ -221,16 +221,7 @@ map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
 """" autocomplete
-
-" " deoplete.
-" let g:deoplete#enable_at_startup = 1
-" " Pass a dictionary to set multiple options
-" call deoplete#custom#option({
-" \ 'auto_complete_delay': 200,
-" \ 'smart_case': v:true,
-" \ })
-" set completeopt+=noinsert
-" call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
+let g:lsp_settings_filetype_javascript = ['javascript-typescript-stdio', 'eslint-language-server']
 
 " UltiSnips
 " If you want :UltiSnipsEdit to split your window.
