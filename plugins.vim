@@ -220,11 +220,17 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
-" deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-set completeopt+=noinsert
-call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
+"""" autocomplete
+
+" " deoplete.
+" let g:deoplete#enable_at_startup = 1
+" " Pass a dictionary to set multiple options
+" call deoplete#custom#option({
+" \ 'auto_complete_delay': 200,
+" \ 'smart_case': v:true,
+" \ })
+" set completeopt+=noinsert
+" call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
 
 " UltiSnips
 " If you want :UltiSnipsEdit to split your window.
@@ -239,3 +245,8 @@ let g:fml_all_sources=1
 let g:tagbar_type_javascript = {
   \ 'ctagsbin': 'jsctags'
 \ }
+
+" Language Server
+" let g:LanguageClient_serverCommands = {
+"     \ 'javascript': ['/Users/pctao/code/_pc/mightymice/node_modules/.bin/flow', 'lsp'],
+"     \ }

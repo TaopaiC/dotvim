@@ -158,8 +158,24 @@ Plug 'joshdick/onedark.vim'
 Plug 'chrisbra/Colorizer'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'carlitux/deoplete-ternjs', {'do': 'yarn global add tern tern-jsx'}
+" autocomplete
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+" lsp
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"" disable deoplete
+"" if has('nvim')
+""   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"" else
+""   Plug 'Shougo/deoplete.nvim'
+""   Plug 'roxma/nvim-yarp'
+""   Plug 'roxma/vim-hug-neovim-rpc'
+"" endif
+"" let g:deoplete#enable_at_startup = 1
+"" Plug 'carlitux/deoplete-ternjs', {'do': 'yarn global add tern tern-jsx'}
+"" disable deoplete
 Plug 'wellle/tmux-complete.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'othree/html5.vim'
@@ -174,6 +190,16 @@ Plug 'itchyny/vim-cursorword'
 Plug 'Shougo/echodoc.vim'
 " Scala
 Plug 'derekwyatt/vim-scala'
+" K8s
+Plug 'c9s/helper.vim'
+Plug 'c9s/treemenu.vim'
+Plug 'c9s/vikube.vim'
+" Language Server
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+Plug 'junegunn/fzf'
 
 
 if filereadable(expand("~/.vimrc.bundles"))
