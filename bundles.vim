@@ -161,10 +161,14 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 " autocomplete
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
+" let g:asyncomplete_log_file = expand('/tmp/asyncomplete.log')
 " lsp
 Plug 'prabirshrestha/vim-lsp'
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('/tmp/vim-lsp.log')
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" 
 Plug 'wellle/tmux-complete.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'othree/html5.vim'
