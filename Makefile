@@ -1,7 +1,3 @@
-# find out where ruby is. can override this by providing environment or command
-# line variable
-RUBY ?= $(shell ./find-ruby.sh)
-
 .PHONY: help delete
 default: help
 
@@ -10,20 +6,13 @@ delete:
 	@read something
 	rm -rf bundle
 
-PLUG := autoload/plug.vim
-${PLUG}:
+PKGM := autoload/plug.vim
+${PKGM}:
 	@echo 
 	@echo
-	@echo '**************************************************************'
-	@echo '*    UPGRADING vundle => Plug                                *'
-	@echo '*                                                            *'
-	@echo '*    Your existing vundle repository will be DELETED!!!!     *'
-	@echo '*    press ENTER to continue, Ctrl-C to stop                 *'
-	@echo '**************************************************************'
-	@read a
 	rm -rf bundle/vundle
-	@echo "Install to \"$(INSTALL_DIR)\"..."
-	curl -fLo autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	@echo "Install to \"$(PKGM)\"..."
+	curl -fLo $(PKGM) --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	@echo
 	@echo '**************************************************************************'
 	@echo '*   DONE! You might need to upgrade your bundles.vim to the new format.  *'
@@ -36,7 +25,7 @@ cleanup:
 
 .PHONY: install reinstall
 
-install: ${PLUG} cleanup
+install: ${PKGM} cleanup
 
 reinstall: delete install
 
@@ -47,7 +36,7 @@ edit-bundles:
 
 edit: edit-bundles install
 
-update-bundles: ${PLUG}
+update-bundles: ${PKGM}
 	vim -u bundles.vim +PlugUpgrade +PlugClean +PlugUpdate
 
 update: update-bundles
